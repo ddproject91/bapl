@@ -307,6 +307,7 @@ export interface Place {
   isSponsored: boolean; // 입점
   description: string;
   imageUrl?: string; // 대표 썸네일. 없으면 카테고리 아이콘으로 폴백
+  linkUrl?: string; // 클릭 시 이동할 랜딩 URL(네이버지도/인스타/홈페이지 등). 없으면 클릭 비활성.
 }
 
 export interface TourPackage {

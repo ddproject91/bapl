@@ -287,6 +287,7 @@ export const placesFallback: Place[] = [
     bikeParking: true,
     isSponsored: false,
     imageUrl: "",
+    linkUrl: "",
     description:
       "대형 주차공간과 단체석을 갖춘 라이더 친화 백반집. 정모 후 식사 장소로 인기입니다.",
   },
@@ -299,6 +300,7 @@ export const placesFallback: Place[] = [
     bikeParking: true,
     isSponsored: false,
     imageUrl: "",
+    linkUrl: "",
     description:
       "바이크 전용 주차 라인과 정비 공구 대여를 제공하는 라이더 카페. 뷰포인트 테라스가 명물입니다.",
   },
@@ -311,6 +313,7 @@ export const placesFallback: Place[] = [
     bikeParking: true,
     isSponsored: false,
     imageUrl: "",
+    linkUrl: "",
     description:
       "이륜차 전용 리프트와 체인 청소존을 갖춘 셀프 세차장. 야간 운영으로 퇴근 후 이용 편리.",
   },
@@ -323,6 +326,7 @@ export const placesFallback: Place[] = [
     bikeParking: true,
     isSponsored: false,
     imageUrl: "",
+    linkUrl: "",
     description:
       "와인딩 코스 중간에 위치한 라이더 단골 국숫집. 헬멧 보관대와 넓은 마당이 있습니다.",
   },
@@ -335,6 +339,7 @@ export const placesFallback: Place[] = [
     bikeParking: true,
     isSponsored: false,
     imageUrl: "",
+    linkUrl: "",
     description:
       "해안도로변 노을 명소 카페. 바이크 인증샷 스팟과 라이딩 기어 보관 서비스를 제공합니다.",
   },
@@ -347,6 +352,7 @@ export const placesFallback: Place[] = [
     bikeParking: true,
     isSponsored: false,
     imageUrl: "",
+    linkUrl: "",
     description:
       "손세차와 광택·코팅 전문 개러지. 예약제로 운영되며 체인 정비 간단 점검을 함께 진행합니다.",
   },
