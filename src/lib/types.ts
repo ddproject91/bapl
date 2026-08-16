@@ -308,6 +308,8 @@ export interface Place {
   description: string;
   imageUrl?: string; // 대표 썸네일. 없으면 카테고리 아이콘으로 폴백
   linkUrl?: string; // 클릭 시 이동할 랜딩 URL(네이버지도/인스타/홈페이지 등). 없으면 클릭 비활성.
+  lat?: number; // 카카오맵 표시용 위도. 0/미설정이면 지도에 핀 없음.
+  lng?: number; // 카카오맵 표시용 경도.
 }
 
 export interface TourPackage {

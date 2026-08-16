@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import type { Place } from "@/lib/types";
 import { Card, Chip, EmptyState, RatingStars } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/Badge";
+import { KakaoPlacesMap } from "@/components/riding/KakaoPlacesMap";
 
 type Cat = "all" | Place["category"];
 
@@ -48,13 +49,9 @@ export function PlacesList({ places }: { places: Place[] }) {
         ))}
       </div>
 
-      {/* 지도 플레이스홀더 */}
-      <div className="mt-5 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border-strong bg-bg-elevated py-10 text-center">
-        <span className="mb-2 text-2xl opacity-60">🗺️</span>
-        <p className="text-sm font-medium text-fg-muted">
-          {t("places.mapPlaceholder")}
-        </p>
-        <p className="mt-1 text-xs text-fg-subtle">{t("places.mapHint")}</p>
+      {/* 카카오맵 */}
+      <div className="mt-5">
+        <KakaoPlacesMap places={filtered} />
       </div>
 
       {/* 플레이스 목록 */}
