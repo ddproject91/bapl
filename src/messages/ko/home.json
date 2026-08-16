@@ -3,8 +3,9 @@
     "kicker": "국내 최대 바이크 데이터 플랫폼을 목표로",
     "title": "라이더의 모든 것,\n한 곳에서.",
     "subtitle": "브랜드·모델 데이터부터 커뮤니티, 라이딩, 거래, 정비까지 — BAPL에서.",
-    "ctaModels": "모델관 둘러보기",
-    "ctaCommunity": "커뮤니티 가기",
+    "ctaBrands": "브랜드관 보러가기",
+    "ctaModels": "모델관 보러가기",
+    "ctaCommunity": "커뮤니티 바로가기",
     "stat1": "브랜드",
     "stat2": "모델 데이터",
     "stat3": "가입 라이더"

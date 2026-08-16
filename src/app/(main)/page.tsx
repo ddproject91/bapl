@@ -74,8 +74,14 @@ export default async function HomePage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
-              href="/models"
+              href="/brands"
               className="rounded-xl bg-neon px-5 py-3 text-sm font-bold text-black transition-transform hover:scale-[1.03] active:scale-95"
+            >
+              {t("hero.ctaBrands")}
+            </Link>
+            <Link
+              href="/models"
+              className="rounded-xl border border-border-strong px-5 py-3 text-sm font-bold transition-colors hover:border-neon/50 hover:text-neon"
             >
               {t("hero.ctaModels")}
             </Link>
