@@ -17,6 +17,7 @@ import koGarage from "@/messages/ko/garage.json";
 import koMy from "@/messages/ko/my.json";
 import koNews from "@/messages/ko/news.json";
 import koSearch from "@/messages/ko/search.json";
+import koPartnership from "@/messages/ko/partnership.json";
 
 export const locales = ["ko", "en"] as const;
 export type Locale = (typeof locales)[number];
@@ -36,6 +37,7 @@ const MESSAGES: Record<Locale, Record<string, unknown>> = {
     my: koMy,
     news: koNews,
     search: koSearch,
+    partnership: koPartnership,
   },
   // Phase 5에서 en 파일을 추가하면 여기에 매핑. 지금은 ko로 폴백.
   en: {},

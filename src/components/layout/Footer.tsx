@@ -63,9 +63,9 @@ export async function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <a href={`mailto:${BUSINESS_INFO.customerServiceContact}`} className="hover:text-neon">
+                  <Link href="/partnership" className="hover:text-neon">
                     {t("footer.contact")}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
