@@ -171,7 +171,7 @@ async function getRealPosts(): Promise<Post[]> {
 
   const { data: rows } = await supabase
     .from("posts")
-    .select("id, board_slug, author_id, title, content, created_at")
+    .select("id, board_slug, author_id, title, content, image_urls, view_count, created_at")
     .order("created_at", { ascending: false });
   if (!rows || rows.length === 0) return [];
 
@@ -205,7 +205,8 @@ async function getRealPosts(): Promise<Post[]> {
       title: r.title,
       excerpt: r.content.slice(0, 80),
       content: r.content,
-      viewCount: 0,
+      imageUrls: r.image_urls ?? [],
+      viewCount: r.view_count ?? 0,
       likeCount: likeCountById.get(r.id) ?? 0,
       commentCount: commentCountById.get(r.id) ?? 0,
       createdAt: r.created_at.slice(0, 10),
@@ -286,4 +287,11 @@ export async function getCommentsByPost(postId: string): Promise<CommunityCommen
 export async function getPostCount(slug: string): Promise<number> {
   const posts = await getPosts();
   return posts.filter((p) => p.boardSlug === slug).length;
+}
+
+/** 실제 회원 글의 조회수를 원자적으로 1 증가시킨다. 목업 글은 대상이 아니다. */
+export async function incrementPostViewCount(postId: string): Promise<void> {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return;
+  await supabase.rpc("increment_post_view_count", { post_id: postId });
 }

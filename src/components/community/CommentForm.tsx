@@ -31,6 +31,22 @@ export function CommentForm({ postId }: { postId: string }) {
       setError(err.message);
       return;
     }
+
+    // 실제 회원 글이고 본인 글이 아니면 글쓴이에게 댓글 알림을 남긴다.
+    const { data: post } = await supabase
+      .from("posts")
+      .select("author_id, title")
+      .eq("id", postId)
+      .maybeSingle();
+    if (post && post.author_id !== user.id) {
+      await supabase.from("notifications").insert({
+        user_id: post.author_id,
+        type: "comment",
+        message: `회원님의 글 '${post.title}'에 새 댓글이 달렸습니다.`,
+        link: `/community/posts/${postId}`,
+      });
+    }
+
     setContent("");
     await fetch("/api/revalidate-community", {
       method: "POST",

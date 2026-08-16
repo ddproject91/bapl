@@ -37,6 +37,7 @@ export async function PostRow({
             ✓ {t("badge.accepted")}
           </Badge>
         )}
+        {!post.authorId && <Badge variant="soon">{t("badge.sample")}</Badge>}
         {showBoard && boardLabel && (
           <span className="text-[11px] font-medium text-fg-subtle">
             {boardLabel}

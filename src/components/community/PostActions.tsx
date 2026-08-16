@@ -87,6 +87,14 @@ export function PostActions({
       if (!error) {
         setLiked(true);
         setCount((c) => c + 1);
+        if (authorId && authorId !== user.id) {
+          await supabase.from("notifications").insert({
+            user_id: authorId,
+            type: "like",
+            message: "회원님의 글에 좋아요를 눌렀습니다.",
+            link: `/community/posts/${postId}`,
+          });
+        }
       }
     }
     setPending(false);

@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
+import { uploadPostImageAction } from "@/components/community/actions";
 import type { Board } from "@/lib/types";
 import { PageHeader } from "@/components/ui/primitives";
+
+const MAX_IMAGES = 4;
 
 type LoadState = "loading" | "ready" | "not-found" | "forbidden";
 
@@ -15,11 +19,15 @@ export function EditPostForm({ postId, boards }: { postId: string; boards: Board
   const { user, loading: authLoading, openLogin } = useAuth();
   const router = useRouter();
   const [supabase] = useState(() => createClient());
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [state, setState] = useState<LoadState>("loading");
   const [boardSlug, setBoardSlug] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [images, setImages] = useState<string[]>([]);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +40,7 @@ export function EditPostForm({ postId, boards }: { postId: string; boards: Board
     let active = true;
     supabase
       .from("posts")
-      .select("board_slug, author_id, title, content")
+      .select("board_slug, author_id, title, content, image_urls")
       .eq("id", postId)
       .maybeSingle()
       .then(({ data }) => {
@@ -48,12 +56,42 @@ export function EditPostForm({ postId, boards }: { postId: string; boards: Board
         setBoardSlug(data.board_slug);
         setTitle(data.title);
         setContent(data.content);
+        setImages(data.image_urls ?? []);
         setState("ready");
       });
     return () => {
       active = false;
     };
   }, [authLoading, user, postId, supabase]);
+
+  async function onImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (files.length === 0) return;
+    const remaining = MAX_IMAGES - images.length;
+    if (remaining <= 0) {
+      setImageError(t("writePage.imageLimit", { max: MAX_IMAGES }));
+      return;
+    }
+    setImageError(null);
+    setImageUploading(true);
+    for (const file of files.slice(0, remaining)) {
+      const formData = new FormData();
+      formData.set("file", file);
+      const result = await uploadPostImageAction(formData);
+      if (result.ok) {
+        setImages((prev) => [...prev, result.url]);
+      } else {
+        setImageError(result.error);
+        break;
+      }
+    }
+    setImageUploading(false);
+  }
+
+  function removeImage(url: string) {
+    setImages((prev) => prev.filter((u) => u !== url));
+  }
 
   async function submit() {
     if (!title.trim() || !content.trim()) {
@@ -64,7 +102,12 @@ export function EditPostForm({ postId, boards }: { postId: string; boards: Board
     setError(null);
     const { error: err } = await supabase
       .from("posts")
-      .update({ board_slug: boardSlug, title: title.trim(), content: content.trim() })
+      .update({
+        board_slug: boardSlug,
+        title: title.trim(),
+        content: content.trim(),
+        image_urls: images,
+      })
       .eq("id", postId);
     setSubmitting(false);
     if (err) {
@@ -142,6 +185,47 @@ export function EditPostForm({ postId, boards }: { postId: string; boards: Board
             className="rounded-xl border border-border bg-bg-elevated px-3.5 py-2.5 text-sm outline-none focus:border-neon"
           />
         </label>
+
+        <div>
+          <span className="text-xs font-medium text-fg-muted">{t("writePage.images")}</span>
+          <div className="mt-1.5 flex flex-wrap gap-2">
+            {images.map((url) => (
+              <div key={url} className="relative h-20 w-20 overflow-hidden rounded-xl border border-border">
+                <Image src={url} alt="" fill sizes="80px" className="object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeImage(url)}
+                  className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-xs text-white"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+            {images.length < MAX_IMAGES && (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={imageUploading}
+                className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-border-strong text-fg-subtle transition-colors hover:border-neon/50 hover:text-neon disabled:opacity-50"
+              >
+                <span className="text-lg">{imageUploading ? "…" : "+"}</span>
+                <span className="text-[10px]">
+                  {imageUploading ? t("writePage.imageUploading") : t("writePage.imageAdd")}
+                </span>
+              </button>
+            )}
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={onImageSelect}
+            className="hidden"
+          />
+          {imageError && <p className="mt-1 text-[11px] font-medium text-danger">{imageError}</p>}
+        </div>
+
         {error && <p className="text-xs font-medium text-danger">{error}</p>}
         <div className="mt-2 flex gap-2">
           <button

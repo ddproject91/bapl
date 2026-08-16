@@ -202,6 +202,7 @@ export interface Post {
   content: string;
   hasVideo?: boolean;
   isAcceptedAnswer?: boolean; // qna 채택됨
+  imageUrls?: string[]; // 실제 회원 글의 첨부 사진
   viewCount: number;
   likeCount: number;
   commentCount: number;

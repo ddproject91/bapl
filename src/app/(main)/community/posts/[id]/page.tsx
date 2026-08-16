@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -7,6 +8,7 @@ import {
   getPost,
   getBoard,
   getCommentsByPost,
+  incrementPostViewCount,
 } from "@/data/mock/community";
 import { Badge } from "@/components/ui/Badge";
 import { PostActions } from "@/components/community/PostActions";
@@ -54,6 +56,11 @@ export default async function PostDetailPage({
   const c = await getTranslations("common");
   const postComments = await getCommentsByPost(post.id);
 
+  if (post.authorId) {
+    await incrementPostViewCount(post.id);
+    post.viewCount += 1;
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-6">
       {/* 상단 이동 */}
@@ -76,6 +83,7 @@ export default async function PostDetailPage({
               ✓ {t("badge.accepted")}
             </Badge>
           )}
+          {!post.authorId && <Badge variant="soon">{t("badge.sample")}</Badge>}
         </div>
         <h1 className="mt-2 text-xl font-black tracking-tight md:text-2xl">
           {post.title}
@@ -128,6 +136,26 @@ export default async function PostDetailPage({
         <div className="mt-5 whitespace-pre-line text-sm leading-relaxed text-fg md:text-[15px]">
           {post.content}
         </div>
+
+        {/* 첨부 사진 */}
+        {post.imageUrls && post.imageUrls.length > 0 && (
+          <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {post.imageUrls.map((url, i) => (
+              <div
+                key={url}
+                className="relative aspect-square overflow-hidden rounded-xl border border-border"
+              >
+                <Image
+                  src={url}
+                  alt={`${post.title} ${i + 1}`}
+                  fill
+                  sizes="(min-width: 640px) 33vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </article>
 
       {/* ── 액션 바 ── */}

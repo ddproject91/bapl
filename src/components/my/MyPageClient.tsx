@@ -823,6 +823,13 @@ function NotificationsTab({
   onRead: (id: string) => void;
   onReadAll: () => void;
 }) {
+  const router = useRouter();
+
+  function openNotification(n: NotificationRow) {
+    onRead(n.id);
+    if (n.link) router.push(n.link);
+  }
+
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
@@ -851,7 +858,7 @@ function NotificationsTab({
             <button
               key={n.id}
               type="button"
-              onClick={() => onRead(n.id)}
+              onClick={() => openNotification(n)}
               className={cn(
                 "flex w-full items-start gap-3 p-4 text-left transition-colors hover:bg-bg-elevated",
                 !n.read && "bg-neon/[0.04]",
