@@ -16,10 +16,24 @@ function escapeHtml(s: string): string {
   );
 }
 
-export function KakaoPlacesMap({ places }: { places: Place[] }) {
+interface MarkerEntry {
+  id: string;
+  marker: any;
+  position: any;
+  info: any;
+}
+
+export function KakaoPlacesMap({
+  places,
+  selectedId,
+}: {
+  places: Place[];
+  selectedId?: string;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const markersRef = useRef<MarkerEntry[]>([]);
+  const openInfoRef = useRef<any>(null);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,8 +79,9 @@ export function KakaoPlacesMap({ places }: { places: Place[] }) {
     const kakao = window.kakao;
     const map = mapRef.current;
 
-    markersRef.current.forEach((m) => m.setMap(null));
+    markersRef.current.forEach((m) => m.marker.setMap(null));
     markersRef.current = [];
+    openInfoRef.current = null;
 
     if (withCoords.length === 0) return;
 
@@ -78,18 +93,34 @@ export function KakaoPlacesMap({ places }: { places: Place[] }) {
         content: `<div style="padding:6px 10px;font-size:12px;white-space:nowrap;">${escapeHtml(p.name)}</div>`,
       });
       kakao.maps.event.addListener(marker, "mouseover", () => info.open(map, marker));
-      kakao.maps.event.addListener(marker, "mouseout", () => info.close());
+      kakao.maps.event.addListener(marker, "mouseout", () => {
+        if (openInfoRef.current !== info) info.close();
+      });
       if (p.linkUrl) {
         kakao.maps.event.addListener(marker, "click", () => {
           window.open(p.linkUrl, "_blank", "noopener,noreferrer");
         });
       }
-      markersRef.current.push(marker);
+      markersRef.current.push({ id: p.id, marker, position, info });
       bounds.extend(position);
     });
     map.setBounds(bounds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, JSON.stringify(withCoords.map((p) => [p.id, p.lat, p.lng]))]);
+
+  // 카드에서 "지도에서 보기"를 누르면 해당 위치로 이동+확대하고 말풍선을 띄운다.
+  useEffect(() => {
+    if (!loaded || !mapRef.current || !selectedId) return;
+    const entry = markersRef.current.find((m) => m.id === selectedId);
+    if (!entry) return;
+    const map = mapRef.current;
+
+    openInfoRef.current?.close();
+    map.panTo(entry.position);
+    map.setLevel(4);
+    entry.info.open(map, entry.marker);
+    openInfoRef.current = entry.info;
+  }, [loaded, selectedId]);
 
   if (error) {
     return (

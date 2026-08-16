@@ -32,6 +32,12 @@ export function PlacesList({ places }: { places: Place[] }) {
   const [cat, setCat] = useState<Cat>("all");
   const [cuisine, setCuisine] = useState<CuisineFilter>("all");
   const [cafeType, setCafeType] = useState<CafeTypeFilter>("all");
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+
+  function showOnMap(id: string) {
+    setSelectedId(id);
+    document.getElementById("places-map")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   const filtered = places
     .filter((p) => cat === "all" || p.category === cat)
@@ -95,8 +101,8 @@ export function PlacesList({ places }: { places: Place[] }) {
       )}
 
       {/* 카카오맵 */}
-      <div className="mt-5">
-        <KakaoPlacesMap places={filtered} />
+      <div id="places-map" className="mt-5 scroll-mt-4">
+        <KakaoPlacesMap places={filtered} selectedId={selectedId} />
       </div>
 
       {/* 플레이스 목록 */}
@@ -107,6 +113,8 @@ export function PlacesList({ places }: { places: Place[] }) {
       ) : (
       <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
         {filtered.map((p) => {
+          const hasCoords =
+            typeof p.lat === "number" && typeof p.lng === "number" && !(p.lat === 0 && p.lng === 0);
           const content = (
             <>
               <div
@@ -134,6 +142,19 @@ export function PlacesList({ places }: { places: Place[] }) {
                   <Badge variant="vendor" className="absolute right-2 top-2">
                     {t("places.sponsored")}
                   </Badge>
+                )}
+                {hasCoords && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      showOnMap(p.id);
+                    }}
+                    className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+                  >
+                    📍 {t("places.viewOnMap")}
+                  </button>
                 )}
               </div>
 
