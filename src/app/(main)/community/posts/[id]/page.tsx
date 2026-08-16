@@ -8,10 +8,10 @@ import {
   getBoard,
   getCommentsByPost,
 } from "@/data/mock/community";
-import { PageHeader, Card } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/Badge";
 import { PostActions } from "@/components/community/PostActions";
 import { CommentForm } from "@/components/community/CommentForm";
+import { CommentList } from "@/components/community/CommentList";
 import { compactNumber } from "@/lib/utils";
 
 export const revalidate = 300;
@@ -134,6 +134,8 @@ export default async function PostDetailPage({
       <div className="mt-6 animate-fade-up">
         <PostActions
           postId={post.id}
+          boardSlug={post.boardSlug}
+          authorId={post.authorId}
           likeCount={post.likeCount}
           commentCount={post.commentCount}
         />
@@ -151,45 +153,7 @@ export default async function PostDetailPage({
             {t("post.commentEmpty")}
           </p>
         ) : (
-          <div className="space-y-3">
-            {postComments.map((cm) => (
-              <Card
-                key={cm.id}
-                className={
-                  "p-4 " +
-                  (cm.isAccepted ? "border-neon/40 bg-neon/[0.05]" : "")
-                }
-              >
-                {cm.isAccepted && (
-                  <div className="mb-2">
-                    <Badge variant="neon" glow>
-                      ✓ {t("post.acceptedComment")}
-                    </Badge>
-                  </div>
-                )}
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1 font-bold text-fg">
-                    {cm.author}
-                    {cm.authorVerified && (
-                      <span
-                        className="text-neon"
-                        title={t("badge.riderVerified")}
-                      >
-                        ✔
-                      </span>
-                    )}
-                  </span>
-                  <span className="text-fg-subtle">{cm.createdAt}</span>
-                </div>
-                <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-fg">
-                  {cm.content}
-                </p>
-                <div className="mt-2 text-[11px] text-fg-subtle">
-                  👍 {compactNumber(cm.likeCount)}
-                </div>
-              </Card>
-            ))}
-          </div>
+          <CommentList comments={postComments} />
         )}
 
         {/* 댓글 입력 */}

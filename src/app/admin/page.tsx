@@ -42,13 +42,19 @@ export default async function AdminHomePage() {
         </div>
       )}
 
-      <div className="mb-6">
-        <h2 className="mb-2 text-sm font-bold text-fg-muted">회원</h2>
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row">
         <Link
           href="/admin/members"
-          className="flex items-center justify-between rounded-xl border border-border bg-bg-card px-4 py-3 text-sm transition-colors hover:border-neon/40 sm:max-w-xs"
+          className="flex flex-1 items-center justify-between rounded-xl border border-border bg-bg-card px-4 py-3 text-sm transition-colors hover:border-neon/40"
         >
           <span className="font-medium">회원 관리 (권한/등급)</span>
+          <span className="text-xs text-fg-subtle">→</span>
+        </Link>
+        <Link
+          href="/admin/community"
+          className="flex flex-1 items-center justify-between rounded-xl border border-border bg-bg-card px-4 py-3 text-sm transition-colors hover:border-neon/40"
+        >
+          <span className="font-medium">커뮤니티 관리 (신고/삭제)</span>
           <span className="text-xs text-fg-subtle">→</span>
         </Link>
       </div>

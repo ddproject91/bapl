@@ -195,6 +195,7 @@ export interface Post {
   id: string;
   boardSlug: string;
   author: string;
+  authorId?: string; // 실제 회원 글일 때만 존재 — 본인 글 수정/삭제 권한 판별용
   authorVerified?: boolean;
   title: string;
   excerpt: string;

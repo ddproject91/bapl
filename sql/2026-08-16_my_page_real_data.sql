@@ -64,6 +64,12 @@ create policy "user_bikes_delete_own"
   on public.user_bikes for delete
   using (auth.uid() = user_id);
 
+-- ─── likes: 찜(target_type='listing') 허용 ──────────────────
+-- 기존 제약이 target_type='post'만 허용해서 마켓 매물 찜하기가 실패하던 문제 수정.
+alter table public.likes drop constraint if exists likes_target_type_check;
+alter table public.likes add constraint likes_target_type_check
+  check (target_type in ('post', 'listing'));
+
 -- ─── 프로필: 라이딩 입문연도 ───────────────────────────────
 -- 마이페이지 프로필 카드의 "라이딩 경력 N년차"가 모든 유저에게 같은 값(2021)으로
 -- 고정 노출되던 문제 수정용. 0이면 미설정으로 취급해 경력 문구를 숨긴다.

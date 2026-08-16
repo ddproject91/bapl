@@ -15,6 +15,7 @@ export interface CommunityComment {
   id: string;
   postId: string;
   author: string;
+  authorId?: string; // 실제 회원 댓글일 때만 존재 — 본인 댓글 수정/삭제 권한 판별용
   authorVerified?: boolean;
   content: string;
   createdAt: string;
@@ -199,6 +200,7 @@ async function getRealPosts(): Promise<Post[]> {
       id: r.id,
       boardSlug: r.board_slug,
       author: profile?.nickname ?? "라이더",
+      authorId: r.author_id,
       authorVerified: profile?.is_rider_verified ?? false,
       title: r.title,
       excerpt: r.content.slice(0, 80),
@@ -235,6 +237,7 @@ async function getRealComments(): Promise<CommunityComment[]> {
       id: r.id,
       postId: r.post_id,
       author: profile?.nickname ?? "라이더",
+      authorId: r.author_id,
       authorVerified: profile?.is_rider_verified ?? false,
       content: r.content,
       createdAt: r.created_at.slice(0, 10),
