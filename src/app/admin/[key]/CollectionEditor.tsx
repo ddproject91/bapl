@@ -252,7 +252,8 @@ export function FieldInput({
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   // 값 길이와 무관하게 필드 이름만으로 판단(긴 URL이 "text" 타입으로 분류돼도 업로드 UI가 빠지지 않도록).
-  const isImageUrlField = /url/i.test(field.key);
+  // 단, linkUrl처럼 "이동할 링크"를 뜻하는 필드는 이미지가 아니므로 업로드 UI를 붙이지 않는다.
+  const isImageUrlField = /url$/i.test(field.key) && !/^link/i.test(field.key);
 
   async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
