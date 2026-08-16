@@ -3,12 +3,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import type { Place } from "@/lib/types";
+import type { FoodCuisine, Place } from "@/lib/types";
 import { Card, Chip, EmptyState, RatingStars } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/Badge";
 import { KakaoPlacesMap } from "@/components/riding/KakaoPlacesMap";
 
 type Cat = "all" | Place["category"];
+type CuisineFilter = "all" | FoodCuisine;
 
 const CAT_ICON: Record<Place["category"], string> = {
   food: "🍚",
@@ -22,12 +23,16 @@ const CAT_COLOR: Record<Place["category"], string> = {
   wash: "#4a90c9",
 };
 
+const CUISINES: FoodCuisine[] = ["korean", "chinese", "western", "japanese", "dessert", "other"];
+
 export function PlacesList({ places }: { places: Place[] }) {
   const t = useTranslations("riding");
   const [cat, setCat] = useState<Cat>("all");
+  const [cuisine, setCuisine] = useState<CuisineFilter>("all");
 
-  const filtered =
-    cat === "all" ? places : places.filter((p) => p.category === cat);
+  const filtered = places
+    .filter((p) => cat === "all" || p.category === cat)
+    .filter((p) => cat !== "food" || cuisine === "all" || p.cuisine === cuisine);
 
   const catLabel = (v: Cat) =>
     v === "all"
@@ -38,16 +43,37 @@ export function PlacesList({ places }: { places: Place[] }) {
           ? t("places.catCafe")
           : t("places.catWash");
 
+  const cuisineLabel = (v: CuisineFilter) =>
+    v === "all" ? t("places.cuisineAll") : t(`places.cuisine${v[0].toUpperCase()}${v.slice(1)}`);
+
   return (
     <div>
       {/* 카테고리 필터 */}
       <div className="flex flex-wrap items-center gap-2">
         {(["all", "food", "cafe", "wash"] as const).map((v) => (
-          <Chip key={v} active={cat === v} onClick={() => setCat(v)}>
+          <Chip
+            key={v}
+            active={cat === v}
+            onClick={() => {
+              setCat(v);
+              setCuisine("all");
+            }}
+          >
             {catLabel(v)}
           </Chip>
         ))}
       </div>
+
+      {/* 맛집 세부 카테고리(한식/중식/양식/일식/디저트/기타) */}
+      {cat === "food" && (
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          {(["all", ...CUISINES] as const).map((v) => (
+            <Chip key={v} active={cuisine === v} onClick={() => setCuisine(v)}>
+              {cuisineLabel(v)}
+            </Chip>
+          ))}
+        </div>
+      )}
 
       {/* 카카오맵 */}
       <div className="mt-5">
@@ -95,6 +121,7 @@ export function PlacesList({ places }: { places: Place[] }) {
               <div className="flex flex-1 flex-col p-4">
                 <span className="text-[11px] font-medium text-fg-subtle">
                   {catLabel(p.category)}
+                  {p.category === "food" && p.cuisine && ` · ${cuisineLabel(p.cuisine)}`}
                 </span>
                 <h3 className="mt-1 text-sm font-bold">{p.name}</h3>
                 <p className="mt-0.5 text-[11px] text-fg-subtle">{p.region}</p>

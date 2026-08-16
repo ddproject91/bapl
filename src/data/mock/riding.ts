@@ -281,6 +281,7 @@ export const placesFallback: Place[] = [
   {
     id: "p1",
     category: "food",
+    cuisine: "korean",
     name: "라이더스 밥집 한바퀴",
     region: "경기 양평",
     rating: 4.7,
@@ -296,6 +297,7 @@ export const placesFallback: Place[] = [
   {
     id: "p2",
     category: "cafe",
+    cuisine: "",
     name: "클러치 커피 로스터리",
     region: "강원 춘천",
     rating: 4.8,
@@ -311,6 +313,7 @@ export const placesFallback: Place[] = [
   {
     id: "p3",
     category: "wash",
+    cuisine: "",
     name: "투휠 셀프 세차 스테이션",
     region: "서울 강서",
     rating: 4.5,
@@ -326,6 +329,7 @@ export const placesFallback: Place[] = [
   {
     id: "p4",
     category: "food",
+    cuisine: "korean",
     name: "고갯마루 국숫집",
     region: "강원 인제",
     rating: 4.6,
@@ -341,6 +345,7 @@ export const placesFallback: Place[] = [
   {
     id: "p5",
     category: "cafe",
+    cuisine: "",
     name: "선셋 뷰 라이더스 라운지",
     region: "부산 기장",
     rating: 4.9,
@@ -356,6 +361,7 @@ export const placesFallback: Place[] = [
   {
     id: "p6",
     category: "wash",
+    cuisine: "",
     name: "미러샤인 디테일링 개러지",
     region: "경기 성남",
     rating: 4.7,

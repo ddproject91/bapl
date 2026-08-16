@@ -297,9 +297,18 @@ export interface RidingEvent {
   description: string;
 }
 
+export type FoodCuisine =
+  | "korean"
+  | "chinese"
+  | "western"
+  | "japanese"
+  | "dessert"
+  | "other";
+
 export interface Place {
   id: string;
   category: "food" | "cafe" | "wash";
+  cuisine?: FoodCuisine | ""; // category가 "food"일 때만 의미 있음. 비어있으면 미분류.
   name: string;
   region: string;
   rating: number;
