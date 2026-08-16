@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/components/auth/AuthProvider";
+import { deleteAccountAction } from "@/components/auth/actions";
 import { createClient } from "@/lib/supabase/client";
 import { boardsFallback, postsFallback } from "@/data/mock/community-data";
 import type { Listing, Model } from "@/lib/types";
@@ -404,6 +405,23 @@ export function MyPageClient({
       .eq("target_id", listingId);
   }
 
+  async function deleteAccount() {
+    if (
+      !confirm(
+        "정말 탈퇴하시겠습니까? 작성한 게시글, 댓글, 활동 내역이 모두 영구적으로 삭제되며 복구할 수 없습니다.",
+      )
+    ) {
+      return;
+    }
+    const result = await deleteAccountAction();
+    if (result.ok) {
+      await supabase.auth.signOut();
+      router.push("/");
+    } else {
+      alert(result.error);
+    }
+  }
+
   // ── 비로그인 ──
   if (!user) {
     return (
@@ -577,6 +595,7 @@ export function MyPageClient({
             setLang={setLang}
             onLogout={logout}
             onEditProfile={() => router.push("/my/edit")}
+            onDeleteAccount={deleteAccount}
           />
         )}
       </div>
@@ -1238,6 +1257,7 @@ function SettingsTab({
   setLang,
   onLogout,
   onEditProfile,
+  onDeleteAccount,
 }: {
   t: T;
   toggles: Record<ToggleKey, boolean>;
@@ -1246,6 +1266,7 @@ function SettingsTab({
   setLang: (l: "ko" | "en") => void;
   onLogout: () => void;
   onEditProfile: () => void;
+  onDeleteAccount: () => void;
 }) {
   const notiRows: { key: ToggleKey; label: string }[] = [
     { key: "push", label: t("settings.notiPush") },
@@ -1305,7 +1326,7 @@ function SettingsTab({
           {[
             { label: t("settings.editProfile"), onClick: onEditProfile },
             { label: t("settings.changePassword"), onClick: undefined },
-            { label: t("settings.deleteAccount"), onClick: undefined },
+            { label: t("settings.deleteAccount"), onClick: onDeleteAccount },
           ].map((row) => (
             <button
               key={row.label}

@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
@@ -37,4 +39,49 @@ export async function uploadAvatarAction(
 
   const { data } = supabase.storage.from("images").getPublicUrl(path);
   return { ok: true, url: data.publicUrl };
+}
+
+/** 회원 탈퇴 — 쿠키의 실제 로그인 세션에서 본인 확인 후 auth 계정을 삭제한다.
+ * profiles/posts/comments/likes/checkins/user_bikes/notifications/reports는
+ * 전부 auth.users(id) FK에 on delete cascade로 걸려 있어 함께 삭제된다. */
+export async function deleteAccountAction(): Promise<
+  { ok: true } | { ok: false; error: string }
+> {
+  const cookieStore = await cookies();
+  const supabaseSession = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options),
+          );
+        },
+      },
+    },
+  );
+
+  const {
+    data: { user },
+  } = await supabaseSession.auth.getUser();
+  if (!user) {
+    return { ok: false, error: "로그인이 필요합니다." };
+  }
+
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    return { ok: false, error: "Supabase가 설정되지 않았습니다." };
+  }
+
+  const { error } = await admin.auth.admin.deleteUser(user.id);
+  if (error) {
+    return { ok: false, error: error.message };
+  }
+
+  await supabaseSession.auth.signOut();
+  return { ok: true };
 }

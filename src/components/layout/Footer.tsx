@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { NAV_ITEMS } from "@/lib/nav";
+import { BUSINESS_INFO } from "@/lib/businessInfo";
 
 /** 공식 채널 주소 — 주소가 비어 있으면 링크 없이 텍스트로만 표시된다. */
 const CHANNEL_LINKS: Record<"instagram" | "youtube" | "blog", string> = {
@@ -51,9 +52,21 @@ export async function Footer() {
               <p className="mb-2 text-xs font-bold text-fg">BAPL</p>
               <ul className="space-y-1.5 text-xs text-fg-muted">
                 <li>{t("footer.about")}</li>
-                <li>{t("footer.terms")}</li>
-                <li>{t("footer.privacy")}</li>
-                <li>{t("footer.contact")}</li>
+                <li>
+                  <Link href="/terms" className="hover:text-neon">
+                    {t("footer.terms")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="font-medium text-fg hover:text-neon">
+                    {t("footer.privacy")}
+                  </Link>
+                </li>
+                <li>
+                  <a href={`mailto:${BUSINESS_INFO.customerServiceContact}`} className="hover:text-neon">
+                    {t("footer.contact")}
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
@@ -88,6 +101,14 @@ export async function Footer() {
         <div className="mt-10 border-t border-border pt-5">
           <p className="rounded-lg bg-warning/10 px-3 py-2 text-[11px] leading-relaxed text-warning/90">
             ⚠ {t("footer.notice")}
+          </p>
+          <p className="mt-3 text-[11px] leading-relaxed text-fg-subtle">
+            {BUSINESS_INFO.companyName} · 대표 {BUSINESS_INFO.representativeName} · 사업자등록번호{" "}
+            {BUSINESS_INFO.businessRegistrationNumber} · 통신판매업 신고번호{" "}
+            {BUSINESS_INFO.mailOrderRegistrationNumber}
+            <br />
+            {BUSINESS_INFO.address} · 개인정보보호책임자 {BUSINESS_INFO.privacyOfficerName} (
+            {BUSINESS_INFO.privacyOfficerContact})
           </p>
           <p className="mt-3 text-[11px] text-fg-subtle">
             {t("footer.copyright")}

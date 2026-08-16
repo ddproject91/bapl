@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { uploadAvatarAction } from "@/components/auth/actions";
@@ -19,6 +20,7 @@ export function LoginModal() {
   const [avatarError, setAvatarError] = useState<string | null>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   const onAvatarSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -146,6 +148,36 @@ export function LoginModal() {
               placeholder={t("modal.bikeModelPlaceholder")}
               className="mb-3 w-full rounded-xl border border-border bg-bg-elevated px-3.5 py-2.5 text-sm outline-none focus:border-neon"
             />
+
+            <label className="mb-4 flex items-start gap-2 text-xs text-fg-muted">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0"
+              />
+              <span>
+                (필수){" "}
+                <Link
+                  href="/terms"
+                  target="_blank"
+                  className="font-medium text-fg underline hover:text-neon"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {t("modal.agreeTerms")}
+                </Link>{" "}
+                {t("modal.agreeAnd")}{" "}
+                <Link
+                  href="/privacy"
+                  target="_blank"
+                  className="font-medium text-fg underline hover:text-neon"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {t("modal.agreePrivacy")}
+                </Link>
+                에 동의합니다.
+              </span>
+            </label>
           </>
         )}
 
@@ -180,7 +212,12 @@ export function LoginModal() {
         <button
           type="button"
           onClick={submit}
-          disabled={submitting || !email || !password || (mode === "signup" && !nickname)}
+          disabled={
+            submitting ||
+            !email ||
+            !password ||
+            (mode === "signup" && (!nickname || !agreed))
+          }
           className="w-full rounded-xl bg-neon py-2.5 text-sm font-bold text-black transition-transform hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:hover:scale-100"
         >
           {submitting
@@ -223,6 +260,10 @@ export function LoginModal() {
             {t("modal.google")}
           </button>
         </div>
+
+        <p className="mt-3 text-center text-[10px] leading-relaxed text-fg-subtle">
+          {t("modal.socialAgreeNote")}
+        </p>
       </div>
       </div>
     </div>
