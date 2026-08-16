@@ -1,0 +1,127 @@
+{
+  "list": {
+    "title": "모델관",
+    "description": "브랜드·타입·배기량으로 찾는 모델별 상세 제원과 콘텐츠",
+    "count": "총 {count}개 모델",
+    "empty": "조건에 맞는 모델이 없습니다",
+    "emptyHint": "필터를 조정해 보세요"
+  },
+  "filter": {
+    "all": "전체",
+    "brand": "브랜드",
+    "category": "타입",
+    "displacement": "배기량"
+  },
+  "sort": {
+    "label": "정렬",
+    "popular": "인기순",
+    "priceLow": "가격 낮은순",
+    "priceHigh": "가격 높은순"
+  },
+  "detail": {
+    "latestPrice": "최신 연식가",
+    "colorways": "컬러웨이",
+    "relatedModels": "같은 브랜드 다른 모델",
+    "backToList": "모델 목록"
+  },
+  "tab": {
+    "spec": "제원",
+    "review": "리뷰/시승기",
+    "maintenance": "정비 정보",
+    "tuning": "튜닝 정보",
+    "gallery": "갤러리",
+    "price": "중고 시세",
+    "newbike": "신차 정보",
+    "news": "관련 뉴스",
+    "faq": "FAQ"
+  },
+  "spec": {
+    "groupEngine": "엔진",
+    "groupChassis": "차체",
+    "groupRiding": "주행",
+    "groupElectronics": "전자장비",
+    "groupEtc": "기타",
+    "engineType": "엔진 형식",
+    "engineCc": "배기량",
+    "power": "최고출력",
+    "torque": "최대토크",
+    "cooling": "냉각 방식",
+    "frame": "프레임",
+    "dimensions": "전장×전폭×전고",
+    "wheelbase": "휠베이스",
+    "seatHeight": "시트고",
+    "weight": "중량",
+    "weightWet": "장비 중량",
+    "weightDry": "건조 중량",
+    "fuel": "연료탱크",
+    "economy": "공인연비",
+    "suspensionF": "전륜 서스펜션",
+    "suspensionR": "후륜 서스펜션",
+    "brakeF": "전륜 브레이크",
+    "brakeR": "후륜 브레이크",
+    "tireF": "전륜 타이어",
+    "tireR": "후륜 타이어",
+    "ridingModes": "라이딩 모드",
+    "tc": "트랙션 컨트롤",
+    "abs": "ABS",
+    "absStandard": "기본",
+    "absCornering": "코너링 ABS",
+    "quickshifter": "퀵시프터",
+    "cruise": "크루즈 컨트롤",
+    "tft": "TFT 계기판",
+    "insurance": "보험 클래스",
+    "price": "국내 출시가"
+  },
+  "supported": "지원",
+  "notSupported": "미지원",
+  "review": {
+    "summary": "평균 평점",
+    "count": "리뷰 {count}건",
+    "editorial": "에디토리얼 시승기",
+    "user": "오너 리뷰",
+    "ownership": "보유 {period}",
+    "empty": "아직 등록된 리뷰가 없습니다"
+  },
+  "maintenance": {
+    "title": "정비 포인트 · 고질병",
+    "empty": "등록된 정비 정보가 없습니다"
+  },
+  "tuning": {
+    "title": "튜닝 사례 · 호환 파츠",
+    "empty": "등록된 튜닝 정보가 없습니다"
+  },
+  "gallery": {
+    "title": "포토 갤러리",
+    "soon": "커뮤니티 연동 예정",
+    "soonHint": "자랑 커뮤니티 유저 사진 {count}장 연동 예정 (데모 플레이스홀더)"
+  },
+  "price": {
+    "title": "중고 시세 추이",
+    "caption": "마켓 판매완료 데이터 기반 (데모)",
+    "yearUnit": "{year}년식",
+    "mileage": "주행 {km}",
+    "empty": "시세 데이터가 없습니다"
+  },
+  "newbike": {
+    "title": "연식별 신차 정보",
+    "priceLabel": "출시가",
+    "firstYear": "최초 출시",
+    "empty": "신차 정보가 없습니다"
+  },
+  "news": {
+    "title": "관련 뉴스",
+    "empty": "관련 뉴스가 없습니다",
+    "emptyHint": "이 모델·브랜드 관련 소식이 아직 없습니다"
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "empty": "등록된 FAQ가 없습니다"
+  },
+  "newsCat": {
+    "law": "법개정",
+    "newbike": "신차",
+    "recall": "리콜",
+    "industry": "업계",
+    "blog": "블로그"
+  }
+}

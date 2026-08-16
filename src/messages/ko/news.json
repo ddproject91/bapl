@@ -1,0 +1,22 @@
+{
+  "title": "뉴스",
+  "description": "법개정·신차·리콜·업계 소식을 한곳에서.",
+  "all": "전체",
+  "cat": {
+    "law": "법개정",
+    "newbike": "신차",
+    "recall": "리콜",
+    "industry": "업계",
+    "blog": "블로그"
+  },
+  "source": "출처",
+  "related": "관련 뉴스",
+  "relatedBrand": "관련 브랜드",
+  "relatedModel": "관련 모델",
+  "viewBrand": "브랜드 보기",
+  "viewModel": "모델 보기",
+  "backToNews": "뉴스 목록",
+  "resultCount": "총 {count}건",
+  "empty": "해당 카테고리의 뉴스가 없습니다.",
+  "readMore": "자세히 보기"
+}

@@ -1,0 +1,164 @@
+{
+  "title": "마이페이지",
+  "description": "내 활동과 정보를 한곳에서 관리하세요.",
+  "loginRequired": {
+    "title": "로그인이 필요합니다",
+    "desc": "마이페이지는 로그인 후 이용할 수 있습니다. 데모 계정으로 바로 둘러보세요.",
+    "button": "로그인"
+  },
+  "profile": {
+    "region": "지역",
+    "experience": "라이딩 경력",
+    "experienceYears": "{years}년차",
+    "ageValue": "{age}세",
+    "points": "포인트",
+    "rank": "랭킹",
+    "rankValue": "{rank}위",
+    "editProfile": "프로필 수정",
+    "riderVerified": "라이더 인증"
+  },
+  "tabs": {
+    "profile": "내 프로필",
+    "posts": "게시글·댓글",
+    "bookmarks": "찜한 매물",
+    "notifications": "알림",
+    "activity": "활동 내역",
+    "bikes": "내 바이크",
+    "settings": "설정·보안"
+  },
+  "profileTab": {
+    "summary": "활동 요약",
+    "postCount": "작성 글",
+    "commentCount": "작성 댓글",
+    "likeReceived": "받은 좋아요",
+    "checkinStreak": "연속 출석",
+    "days": "{days}일",
+    "count": "{count}개"
+  },
+  "posts": {
+    "myPosts": "내 게시글",
+    "myComments": "내 댓글",
+    "empty": "아직 작성한 글이 없습니다.",
+    "emptyComments": "아직 작성한 댓글이 없습니다.",
+    "commentedOn": "원글: {title}"
+  },
+  "bookmarks": {
+    "title": "찜한 매물",
+    "empty": "찜한 매물이 없습니다.",
+    "emptyHint": "마켓에서 마음에 드는 매물을 찜해보세요.",
+    "remove": "찜 해제",
+    "status": {
+      "active": "판매중",
+      "reserved": "예약중",
+      "sold": "판매완료"
+    }
+  },
+  "notifications": {
+    "title": "알림",
+    "markAllRead": "모두 읽음",
+    "empty": "새로운 알림이 없습니다.",
+    "unreadCount": "읽지 않은 알림 {count}건",
+    "type": {
+      "comment": "댓글",
+      "like": "좋아요",
+      "chat": "채팅",
+      "consumable": "소모품",
+      "notice": "공지"
+    }
+  },
+  "activity": {
+    "title": "활동 내역",
+    "myPoints": "내 포인트",
+    "myRank": "내 랭킹",
+    "weeklyRanking": "포인트 랭킹 TOP 5",
+    "pointLog": "포인트 적립 내역",
+    "pointLogEmpty": "아직 적립 내역이 없습니다. 출석체크로 포인트를 모아보세요.",
+    "me": "나",
+    "rankingEmpty": "아직 랭킹 데이터가 없습니다.",
+    "action": {
+      "post": "게시글 작성",
+      "comment": "댓글 작성",
+      "checkin": "출석 체크",
+      "verify": "라이더 인증",
+      "review": "리뷰 작성"
+    }
+  },
+  "bikes": {
+    "title": "내 바이크 관리",
+    "addBike": "바이크 추가",
+    "addBikeHint": "보유 기종을 등록하면 소모품 알림과 정비 기록을 관리할 수 있습니다.",
+    "odometer": "주행거리",
+    "purchasedAt": "구매일",
+    "consumableAlert": "소모품 알림 연동",
+    "consumableDesc": "주행거리 기반으로 오일·체인·타이어 교체 시점을 알려드립니다.",
+    "maintenanceLog": "정비 기록",
+    "viewModel": "모델 정보",
+    "empty": "등록된 바이크가 없습니다.",
+    "power": "{hp}마력",
+    "specSummary": "{engine} · {cc}cc",
+    "deleteBike": "삭제",
+    "modal": {
+      "title": "바이크 추가",
+      "model": "기종 선택",
+      "modelPlaceholder": "기종을 선택하세요",
+      "nickname": "애칭",
+      "nicknamePlaceholder": "예: 애마",
+      "odometer": "현재 주행거리(km)",
+      "purchasedAt": "구매일",
+      "cancel": "취소",
+      "submit": "추가",
+      "submitting": "추가 중...",
+      "error": "저장에 실패했습니다. 잠시 후 다시 시도해주세요.",
+      "validationError": "기종과 애칭을 입력해주세요."
+    }
+  },
+  "edit": {
+    "title": "프로필 수정",
+    "description": "닉네임, 지역, 바이크 기종, 프로필 사진을 수정할 수 있어요.",
+    "welcomeTitle": "환영합니다, 라이더!",
+    "welcomeDescription": "프로필을 완성하면 커뮤니티에서 더 잘 어울릴 수 있어요. 나중에 마이페이지에서 언제든 바꿀 수 있습니다.",
+    "welcomeSubmit": "시작하기",
+    "welcomeSkip": "나중에 하기",
+    "avatarSelect": "사진 선택",
+    "avatarChange": "사진 변경",
+    "avatarUploading": "업로드 중...",
+    "nickname": "닉네임",
+    "region": "지역",
+    "regionPlaceholder": "예: 서울",
+    "bikeModel": "현재 바이크 기종",
+    "bikeModelPlaceholder": "예: BMW R1250GS (없으면 비워두세요)",
+    "gender": "성별",
+    "genderUnset": "선택 안 함",
+    "genderMale": "남성",
+    "genderFemale": "여성",
+    "genderOther": "기타",
+    "birthYear": "출생연도",
+    "birthYearPlaceholder": "예: 1990",
+    "ridingSince": "라이딩 입문연도",
+    "ridingSincePlaceholder": "예: 2021 (없으면 비워두세요)",
+    "save": "저장",
+    "saving": "저장 중...",
+    "saved": "저장했습니다.",
+    "error": "저장에 실패했습니다. 잠시 후 다시 시도해주세요.",
+    "cancel": "취소"
+  },
+  "settings": {
+    "title": "설정·보안",
+    "notiSettings": "알림 설정",
+    "notiPush": "푸시 알림",
+    "notiComment": "댓글 알림",
+    "notiLike": "좋아요 알림",
+    "notiConsumable": "소모품 주기 알림",
+    "notiMarketing": "마케팅·이벤트 알림",
+    "language": "언어",
+    "korean": "한국어",
+    "english": "English",
+    "langNote": "다국어 전환은 정식 오픈 후 제공됩니다.",
+    "account": "계정",
+    "editProfile": "프로필 수정",
+    "changePassword": "비밀번호 변경",
+    "deleteAccount": "회원 탈퇴",
+    "logout": "로그아웃",
+    "demoNote": "설정 값은 데모용으로 저장되지 않습니다."
+  }
+}

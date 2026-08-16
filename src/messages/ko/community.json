@@ -1,0 +1,72 @@
+{
+  "title": "커뮤니티",
+  "description": "라이더들의 소통 공간 — 정보와 경험을 나눠요",
+  "write": "글쓰기",
+  "writeDemo": "데모 버전입니다. 글쓰기는 정식 오픈 후 제공됩니다.",
+  "boardsTitle": "게시판",
+  "postCount": "글 {count}개",
+  "riderBanner": {
+    "title": "라이더 인증으로 신뢰를 쌓으세요",
+    "description": "면허와 보유 차량을 인증하면 '라이더 인증' 뱃지가 부여됩니다. 인증 라이더의 글과 답변은 목록에서 우선 노출되며, 건강한 커뮤니티의 기반이 됩니다.",
+    "cta": "인증 안내 보기"
+  },
+  "hotTitle": "지금 뜨는 글",
+  "latestTitle": "최신 글",
+  "boardLatestTitle": "게시판별 최신 글",
+  "empty": "아직 등록된 글이 없습니다",
+  "emptyHint": "첫 번째 글의 주인공이 되어보세요",
+  "listTitle": "글 목록",
+  "backToHub": "커뮤니티 전체",
+  "label": {
+    "views": "조회",
+    "likes": "좋아요",
+    "comments": "댓글",
+    "author": "작성자",
+    "postedAt": "작성일"
+  },
+  "badge": {
+    "video": "영상",
+    "accepted": "채택",
+    "notice": "공지",
+    "riderVerified": "라이더 인증"
+  },
+  "post": {
+    "commentsTitle": "댓글",
+    "commentsCount": "댓글 {count}개",
+    "acceptedComment": "채택된 답변",
+    "commentEmpty": "아직 댓글이 없습니다. 첫 댓글을 남겨보세요.",
+    "commentPlaceholder": "따뜻한 댓글을 남겨주세요…",
+    "commentSubmit": "등록",
+    "commentSubmitting": "등록 중...",
+    "accidentNotice": "이 게시판의 영상·이미지는 번호판, 얼굴 등 개인정보가 블러 처리되어야 합니다. 조언은 상황 묘사에 근거해 주세요. (본 콘텐츠는 데모용 창작 자료입니다.)",
+    "videoNotice": "블랙박스 영상 (데모 — 재생 미지원)"
+  },
+  "writePage": {
+    "title": "새 글 작성",
+    "description": "다른 라이더들과 나누고 싶은 이야기를 남겨보세요.",
+    "board": "게시판",
+    "titleLabel": "제목",
+    "titlePlaceholder": "제목을 입력하세요",
+    "contentLabel": "내용",
+    "contentPlaceholder": "내용을 입력하세요",
+    "submit": "등록",
+    "submitting": "등록 중...",
+    "validation": "제목과 내용을 모두 입력해주세요.",
+    "error": "글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.",
+    "loginTitle": "로그인이 필요합니다",
+    "loginHint": "글쓰기는 로그인 후 이용할 수 있습니다.",
+    "loginButton": "로그인"
+  },
+  "actions": {
+    "like": "좋아요",
+    "comment": "댓글",
+    "bookmark": "찜",
+    "report": "신고",
+    "share": "공유",
+    "demoLike": "데모 버전입니다. 좋아요는 정식 오픈 후 반영됩니다.",
+    "demoBookmark": "데모 버전입니다. 찜은 정식 오픈 후 제공됩니다.",
+    "demoReport": "신고가 접수되었습니다. (데모 — 실제 처리되지 않습니다)",
+    "demoShare": "링크가 복사되었습니다. (데모)",
+    "demoComment": "데모 버전입니다. 댓글 작성은 정식 오픈 후 제공됩니다."
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "brand": {
+    "name": "BAPL",
+    "tagline": "BIKE & ADVENTURE PLATFORM",
+    "description": "바이크를 사랑하는 사람들을 위한 커뮤니티 & 종합 플랫폼"
+  },
+  "nav": {
+    "brands": "브랜드관",
+    "models": "모델관",
+    "community": "커뮤니티",
+    "riding": "라이딩",
+    "market": "마켓",
+    "garage": "정비/관리",
+    "news": "뉴스",
+    "my": "마이페이지",
+    "search": "통합 검색",
+    "home": "홈"
+  },
+  "navDesc": {
+    "brands": "국내·외 모든 바이크 브랜드",
+    "models": "모델별 상세 제원과 콘텐츠",
+    "community": "라이더들의 소통 공간",
+    "riding": "모임·코스·플레이스",
+    "market": "바이크·용품 거래",
+    "garage": "정비와 관리의 모든 것"
+  },
+  "action": {
+    "login": "로그인",
+    "logout": "로그아웃",
+    "signup": "회원가입",
+    "more": "더보기",
+    "viewAll": "전체 보기",
+    "search": "검색",
+    "filter": "필터",
+    "reset": "초기화",
+    "apply": "적용",
+    "close": "닫기",
+    "back": "뒤로",
+    "share": "공유",
+    "bookmark": "찜",
+    "like": "좋아요",
+    "report": "신고",
+    "write": "글쓰기",
+    "register": "등록",
+    "chat": "채팅"
+  },
+  "badge": {
+    "verified": "BAPL 인증",
+    "vendor": "입점",
+    "partner": "제휴",
+    "comingSoon": "준비중",
+    "new": "신규",
+    "hot": "인기",
+    "best": "베스트",
+    "event": "이벤트",
+    "notice": "공지",
+    "riderVerified": "라이더 인증"
+  },
+  "misc": {
+    "loading": "불러오는 중…",
+    "empty": "아직 콘텐츠가 없습니다",
+    "km": "km",
+    "won": "원",
+    "manwon": "만원",
+    "people": "명",
+    "review": "리뷰",
+    "reviewCount": "리뷰 {count}건",
+    "viewCount": "조회 {count}",
+    "ago": "{time} 전",
+    "points": "포인트"
+  },
+  "cat": {
+    "naked": "네이키드",
+    "sport": "스포츠",
+    "tourer": "투어러",
+    "adventure": "어드벤처",
+    "cruiser": "크루저",
+    "scooter": "스쿠터",
+    "classic": "클래식"
+  },
+  "disp": {
+    "u125": "125cc 이하",
+    "126_250": "126~250cc",
+    "251_400": "251~400cc",
+    "401_700": "401~700cc",
+    "701_1000": "701~1000cc",
+    "o1000": "1000cc 초과"
+  },
+  "country": {
+    "DE": "독일",
+    "JP": "일본",
+    "IT": "이탈리아",
+    "AT": "오스트리아",
+    "US": "미국",
+    "GB": "영국",
+    "KR": "대한민국"
+  },
+  "difficulty": {
+    "easy": "쉬움",
+    "medium": "보통",
+    "hard": "어려움"
+  },
+  "footer": {
+    "about": "BAPL 소개",
+    "terms": "이용약관",
+    "privacy": "개인정보처리방침",
+    "contact": "제휴/입점 문의",
+    "channels": "채널",
+    "instagram": "인스타그램",
+    "youtube": "유튜브",
+    "blog": "블로그",
+    "notice": "일부 콘텐츠는 준비 중이며 예시 데이터를 포함할 수 있습니다.",
+    "copyright": "© 2026 BAPL. Bike & Adventure Platform."
+  },
+  "chat": {
+    "title": "채팅 문의",
+    "subtitle": "무엇을 도와드릴까요?",
+    "general": "일반 문의",
+    "insurance": "보험 상담",
+    "insuranceDesc": "라이더 전용 이륜차 보험 가입 상담",
+    "loan": "금융 상담",
+    "loanDesc": "바이크 구매 대출·할부 상담",
+    "placeholder": "메시지를 입력하세요…",
+    "partnerNote": "보험·금융 상담은 제휴 파트너 연결 서비스입니다.",
+    "demoReply": "상담 연결은 준비 중입니다. 정식 오픈 후 제공될 예정입니다."
+  }
+}

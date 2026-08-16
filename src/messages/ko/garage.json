@@ -1,0 +1,114 @@
+{
+  "title": "정비/관리",
+  "description": "정비 매뉴얼부터 소모품 주기, 비용 시세, 고장 진단까지 — 바이크 관리의 모든 것.",
+  "backToHub": "정비/관리 홈",
+  "preview": "미리보기",
+  "hub": {
+    "alert": {
+      "badge": "스마트 알림",
+      "title": "내 바이크 주행거리 기반 소모품 알림",
+      "desc": "보유 기종과 주행거리만 등록하면 엔진오일·체인·타이어 교체 시기를 자동으로 알려드려요. 지금 주행거리로 미리 확인해보세요.",
+      "cta": "소모품 주기 확인"
+    },
+    "sectionTitle": "관리 기능",
+    "cards": {
+      "manuals": { "title": "정비 매뉴얼", "desc": "작업별·모델별 정비 가이드" },
+      "cycles": { "title": "소모품 교체 주기", "desc": "오일·타이어·체인 권장 주기 + 알림" },
+      "costs": { "title": "정비 비용 정보", "desc": "작업별 시세 (유저 제보)" },
+      "shops": { "title": "정비 업체 찾기", "desc": "지도 기반 정비소 검색" },
+      "logs": { "title": "정비 기록 관리", "desc": "내 바이크별 정비 이력" },
+      "diagnosis": { "title": "고장 진단 가이드", "desc": "증상 → 원인 → 조치" },
+      "faq": { "title": "자주 묻는 질문", "desc": "정비 관련 FAQ" }
+    },
+    "guidesTitle": "정비 매뉴얼",
+    "cyclesTitle": "소모품 교체 주기",
+    "costsTitle": "정비 비용 시세"
+  },
+  "manuals": {
+    "title": "정비 매뉴얼",
+    "description": "작업별·모델별 정비 가이드입니다. 난이도를 참고해 셀프 정비 여부를 판단하세요.",
+    "modelLinkNote": "모델관의 정비 정보와 연동됩니다. 모델별 고질병·소모품 규격은 각 모델 상세에서 확인하세요.",
+    "commonModel": "공통",
+    "readGuide": "가이드 보기"
+  },
+  "cycles": {
+    "title": "소모품 교체 주기",
+    "description": "제조사 권장 주기 기반 목업 데이터입니다. 실제 주기는 주행 환경·모델에 따라 달라질 수 있습니다.",
+    "table": {
+      "item": "소모품",
+      "intervalKm": "주행거리 주기",
+      "intervalMonths": "기간 주기",
+      "note": "비고"
+    },
+    "months": "{months}개월",
+    "simulator": {
+      "title": "내 주행거리로 확인하기",
+      "desc": "현재 주행거리를 입력하면 다음 교체까지 남은 거리를 계산해 드려요.",
+      "odometerInput": "현재 주행거리 (km)",
+      "placeholder": "예: 12000",
+      "check": "확인",
+      "resultTitle": "교체 시기 예측",
+      "remaining": "다음 교체까지 {km}",
+      "status": {
+        "ok": "여유",
+        "dueSoon": "교체 임박",
+        "overdue": "교체 필요"
+      },
+      "empty": "주행거리를 입력하면 결과가 표시됩니다.",
+      "disclaimer": "※ 데모용 단순 계산입니다. 실제 정비는 정비소 점검을 따르세요."
+    }
+  },
+  "costs": {
+    "title": "정비 비용 정보",
+    "description": "작업별 예상 정비 비용 시세입니다. 지역·정비소에 따라 차이가 있을 수 있습니다.",
+    "table": {
+      "task": "작업",
+      "model": "모델",
+      "cost": "예상 비용",
+      "region": "지역"
+    },
+    "commonModel": "공통",
+    "demoNote": "유저 제보로 축적되는 시세 데이터입니다.",
+    "report": "시세 제보하기",
+    "reportDemo": "준비 중입니다. 정식 오픈 후 시세 제보가 가능합니다."
+  },
+  "shops": {
+    "title": "정비 업체 찾기",
+    "description": "지도 기반으로 가까운 정비소를 찾고 리뷰를 확인하는 서비스입니다.",
+    "soonTitle": "정비 업체 입점 준비중",
+    "soonDesc": "가까운 정비소를 지도에서 찾고 리뷰·예약까지. 입점 업체가 상단에 노출됩니다.",
+    "previewTitle": "입점 예정 정비소 미리보기",
+    "mapPlaceholder": "카카오맵 정비소 지도",
+    "mapNote": "정식 오픈 시 지도에서 위치·거리순 검색이 제공됩니다.",
+    "rating": "평점",
+    "specialty": "전문 분야"
+  },
+  "logs": {
+    "title": "정비 기록 관리",
+    "description": "내 바이크별 정비 이력을 기록하고 관리하세요.",
+    "loginTitle": "로그인하고 정비 기록을 관리하세요",
+    "loginDesc": "로그인하면 내 바이크별 정비 이력, 비용, 주행거리를 타임라인으로 관리할 수 있습니다.",
+    "login": "로그인",
+    "myBikeNote": "마이페이지의 '내 바이크'와 연동됩니다.",
+    "odometer": "현재 주행거리",
+    "historyTitle": "정비 이력",
+    "cost": "비용",
+    "shop": "정비소",
+    "addLog": "정비 기록 추가",
+    "addDemo": "준비 중입니다. 정식 오픈 후 기록을 추가할 수 있습니다.",
+    "empty": "아직 정비 기록이 없습니다."
+  },
+  "diagnosis": {
+    "title": "고장 진단 가이드",
+    "description": "증상을 선택하면 가능한 원인과 조치를 안내합니다.",
+    "selectSymptom": "증상을 선택하세요",
+    "causesTitle": "가능한 원인과 조치",
+    "cause": "원인",
+    "action": "조치",
+    "disclaimer": "※ 참고용 가이드입니다. 안전과 관련된 증상은 반드시 전문 정비소 점검을 받으세요."
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "description": "정비·관리에 대해 자주 묻는 질문을 모았습니다."
+  }
+}

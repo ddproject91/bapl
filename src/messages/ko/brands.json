@@ -1,0 +1,26 @@
+{
+  "title": "브랜드관",
+  "description": "국내·외 모든 바이크 브랜드를 국가·타입·배기량으로 한눈에 살펴보세요.",
+  "filter": {
+    "country": "국가",
+    "type": "타입",
+    "displacement": "배기량",
+    "all": "전체"
+  },
+  "resultCount": "브랜드 {count}개",
+  "bannerStat": "브랜드 큐레이션",
+  "empty": "조건에 맞는 브랜드가 없습니다",
+  "emptyHint": "필터를 전체로 되돌리고 다시 시도해 보세요.",
+  "backToBrands": "브랜드 목록",
+  "foundedIn": "{year}년 설립",
+  "founded": "설립 연도",
+  "countryLabel": "국가",
+  "modelCount": "보유 모델",
+  "unit": "개",
+  "officialChannels": "공식 채널",
+  "story": "브랜드 스토리",
+  "modelsInBrand": "이 브랜드의 모델",
+  "modelsInBrandDesc": "모델을 선택하면 상세 제원과 리뷰, 중고 시세를 볼 수 있어요.",
+  "emptyModels": "등록된 모델이 아직 없습니다",
+  "emptyModelsHint": "곧 이 브랜드의 모델이 추가될 예정입니다."
+}

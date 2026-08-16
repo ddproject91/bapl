@@ -1,0 +1,147 @@
+{
+  "title": "마켓",
+  "description": "인증 매물로 안전하게. 바이크부터 용품·부품·업체까지 라이더를 위한 거래 공간.",
+  "hub": {
+    "categoriesTitle": "카테고리",
+    "categoriesDesc": "찾는 거래를 골라 바로 이동하세요.",
+    "verifiedTitle": "BAPL 인증 매물",
+    "verifiedDesc": "필수 사진 7종을 모두 충족한 검증 매물만 모았습니다. 목록에서도 인증 매물이 우선 노출됩니다.",
+    "verifiedMore": "인증 매물 전체 보기",
+    "safetyTitle": "안전 거래 안내",
+    "commonTitle": "마켓 공통 기능"
+  },
+  "cat": {
+    "bike": "중고 바이크",
+    "bikeDesc": "인증/비인증 매물 · 필수 사진 검증",
+    "gear": "바이크 용품",
+    "gearDesc": "헬멧·자켓·장비 개인간 중고 거래",
+    "apparel": "의류 · 헬멧",
+    "apparelDesc": "브랜드 신품 (입점)",
+    "parts": "부품 · 튜닝",
+    "partsDesc": "배기·서스펜션·액세서리 (입점)",
+    "dealer": "업체 · 서비스",
+    "dealerDesc": "바이크 매입·판매 인증 업자 (입점)",
+    "groupbuy": "공동구매",
+    "groupbuyDesc": "운영 주도 수량 달성형 공구",
+    "auction": "경매 · 직거래",
+    "auctionDesc": "입찰식 판매 (후순위 기능)"
+  },
+  "bikes": {
+    "title": "중고 바이크",
+    "description": "BAPL 인증 매물과 일반 매물을 함께 둘러보세요. 인증 매물이 목록 상단에 우선 노출됩니다.",
+    "tabAll": "전체",
+    "tabVerified": "BAPL 인증만",
+    "priorityNotice": "인증 매물 우선 정렬",
+    "resultCount": "매물 {count}대",
+    "empty": "조건에 맞는 매물이 없습니다",
+    "emptyHint": "필터를 전체로 되돌려 보세요."
+  },
+  "badge": {
+    "verified": "BAPL 인증",
+    "unverified": "비인증",
+    "vendor": "입점",
+    "dealer": "인증 업자"
+  },
+  "status": {
+    "active": "판매중",
+    "reserved": "예약중",
+    "sold": "판매완료"
+  },
+  "slot": {
+    "title": "필수 인증 사진",
+    "filled": "{count}/{total} 충족",
+    "verifiedComplete": "필수 사진 7종 전부 충족",
+    "front": "전면",
+    "rear": "후면",
+    "left": "좌측면",
+    "right": "우측면",
+    "dash": "계기반",
+    "vin": "차대번호",
+    "docs": "키 · 서류"
+  },
+  "card": {
+    "manner": "매너 {score}",
+    "wishlist": "찜 {count}",
+    "mileage": "주행 {km}",
+    "yearUnit": "{year}년식",
+    "priceOnRequest": "가격 문의"
+  },
+  "detail": {
+    "back": "중고 바이크 목록",
+    "verifiedGalleryTitle": "BAPL 인증 사진",
+    "verifiedGalleryDesc": "판매자가 등록한 필수 사진 7종입니다. 실차와 대조해 확인하세요.",
+    "freeGalleryTitle": "매물 사진",
+    "unverifiedWarning": "비인증 매물입니다. 필수 사진 검증을 거치지 않았으니 직접 실차 확인 후 거래하세요.",
+    "specTitle": "제원 · 매물 정보",
+    "year": "연식",
+    "mileage": "주행거리",
+    "region": "지역",
+    "modelLink": "모델관에서 상세 제원 보기",
+    "sellerTitle": "판매자 정보",
+    "mannerScore": "매너 점수",
+    "registeredAt": "등록일",
+    "notFound": "매물을 찾을 수 없습니다"
+  },
+  "action": {
+    "chat": "1:1 채팅",
+    "wishlist": "찜하기",
+    "loginRequired": "로그인 후 이용할 수 있어요.",
+    "chatDemo": "데모 버전입니다. 실제 1:1 채팅은 정식 오픈 후 제공됩니다.",
+    "wishlistAdded": "찜 목록에 담았습니다.",
+    "wishlistRemoved": "찜 목록에서 제거했습니다."
+  },
+  "safety": {
+    "chat": "1:1 채팅",
+    "chatDesc": "판매자와 실시간 채팅으로 안전하게 문의하세요.",
+    "manner": "매너 점수",
+    "mannerDesc": "거래 후기로 쌓이는 판매자 신뢰 지표를 확인하세요.",
+    "wishlist": "찜",
+    "wishlistDesc": "관심 매물을 저장하고 시세 변동을 지켜보세요.",
+    "report": "사기 방지",
+    "reportDesc": "의심 매물은 신고, 인증 매물은 필수 사진으로 검수합니다."
+  },
+  "gear": {
+    "title": "바이크 용품",
+    "description": "헬멧·자켓·장비를 라이더끼리 직접 거래하는 개인간 중고 마켓입니다.",
+    "resultCount": "용품 {count}건"
+  },
+  "apparel": {
+    "title": "의류 · 헬멧",
+    "description": "입점 브랜드의 신품 라이딩 기어입니다. 정품 보증 입점 상품만 노출됩니다.",
+    "vendorNotice": "입점 브랜드 신품 · 정품 보증",
+    "resultCount": "상품 {count}건"
+  },
+  "parts": {
+    "title": "부품 · 튜닝",
+    "description": "배기·서스펜션·액세서리 등 입점 브랜드의 정품 튜닝 파츠입니다.",
+    "vendorNotice": "입점 브랜드 정품 파츠",
+    "resultCount": "상품 {count}건"
+  },
+  "dealers": {
+    "title": "업체 · 서비스",
+    "description": "사업자 인증을 거친 바이크 매입·판매 전문 업자입니다.",
+    "vendorNotice": "사업자 인증 · 업자 뱃지 부여",
+    "resultCount": "업체 {count}곳",
+    "viewInventory": "보유 매물 문의"
+  },
+  "groupbuy": {
+    "title": "공동구매",
+    "description": "운영이 직접 진행하는 수량 달성형 공동구매입니다. 목표 수량 달성 시 특가로 진행됩니다.",
+    "progress": "{joined}/{target}명 참여",
+    "remain": "{remain}명 남음",
+    "achieved": "목표 달성",
+    "join": "공구 참여",
+    "resultCount": "진행중 공구 {count}건",
+    "priceLabel": "공구가"
+  },
+  "auction": {
+    "title": "경매 · 직거래",
+    "description": "입찰식 판매 방식입니다. 경매는 후순위 개발 기능으로, 아래는 예시 목업입니다.",
+    "soonNotice": "경매 기능은 정식 오픈 후 순차 도입 예정인 후순위 기능입니다. 아래는 예시입니다.",
+    "startPrice": "시작가",
+    "currentBid": "현재 최고가",
+    "bidCount": "입찰 {count}회",
+    "endsAt": "{date} 마감",
+    "resultCount": "경매 {count}건"
+  }
+}

@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/*
+  BAPL Design System — 다크 베이스 테크/모터스포츠 무드, 모바일 퍼스트
+  블랙 배경 + 화이트 텍스트 + 네온 그린 포인트(#00E676)
+*/
+
+:root {
+  /* 라이트 테마 — 밝은 배경 + 어두운 텍스트, 네온그린 포인트는 가독성 위해 톤 조정 */
+  --bg: #f6f7f9;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --border: #e4e6ea;
+  --border-strong: #d0d3d9;
+  --fg: #17181c;
+  --fg-muted: #5a5e67;
+  --fg-subtle: #8b8f98;
+  --neon: #00a552; /* 밝은 배경에서도 읽히는 그린 (버튼 배경 + 액센트 텍스트 겸용) */
+  --neon-dim: #00934a;
+  --neon-glow: rgba(0, 165, 82, 0.28);
+  --danger: #e53935;
+  --warning: #f59e0b;
+  --info: #0ea5e9;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-card: var(--bg-card);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-neon: var(--neon);
+  --color-neon-dim: var(--neon-dim);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --font-sans: var(--font-pretendard), system-ui, sans-serif;
+  /* Geist Mono에는 한글 글리프가 없어 한글이 시스템 폰트로 떨어진다.
+     Pretendard를 예비로 두어 숫자는 모노, 한글은 Pretendard로 통일. */
+  --font-mono: var(--font-geist-mono), var(--font-pretendard), monospace;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  background: var(--bg);
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-pretendard), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(0, 165, 82, 0.2);
+  color: var(--fg);
+}
+
+/* 키보드 포커스 링 — 브랜드 네온 컬러 기준, 마우스 클릭 시엔 표시 안 함 */
+:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 얇은 스크롤바 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-subtle);
+}
+
+/* 가로 스크롤 스냅 (모바일 캐러셀) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility text-neon {
+  color: var(--neon);
+}
+
+@utility glow {
+  box-shadow: 0 0 0 1px var(--neon-glow), 0 0 24px -4px var(--neon-glow);
+}
+
+@keyframes bapl-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: bapl-fade-up 0.4s ease both;
+}

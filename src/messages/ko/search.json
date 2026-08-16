@@ -1,0 +1,15 @@
+{
+  "title": "통합 검색",
+  "description": "브랜드·모델·뉴스를 한 번에 검색하세요.",
+  "placeholder": "브랜드, 모델, 뉴스 검색…",
+  "resultBrands": "브랜드",
+  "resultModels": "모델",
+  "resultNews": "뉴스",
+  "resultCount": "{count}건",
+  "noResult": "검색 결과가 없습니다",
+  "noResultHint": "다른 검색어로 다시 시도해보세요.",
+  "popular": "인기 검색어",
+  "recommend": "추천 모델",
+  "comingSoonScope": "게시글·매물·회원 통합 검색은 정식 오픈 예정입니다.",
+  "clear": "지우기"
+}

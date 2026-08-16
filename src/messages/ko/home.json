@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "kicker": "국내 최대 바이크 데이터 플랫폼을 목표로",
+    "title": "라이더의 모든 것,\n한 곳에서.",
+    "subtitle": "브랜드·모델 데이터부터 커뮤니티, 라이딩, 거래, 정비까지 — BAPL에서.",
+    "ctaModels": "모델관 둘러보기",
+    "ctaCommunity": "커뮤니티 가기",
+    "stat1": "브랜드",
+    "stat2": "모델 데이터",
+    "stat3": "가입 라이더"
+  },
+  "menu": {
+    "title": "무엇을 찾으세요?",
+    "subtitle": "7개 핵심 메뉴로 바로 이동"
+  },
+  "popular": {
+    "title": "인기 모델",
+    "subtitle": "지금 라이더들이 가장 많이 보는 모델"
+  },
+  "brands": {
+    "title": "브랜드관",
+    "subtitle": "국내·외 바이크 브랜드 한눈에"
+  },
+  "news": {
+    "title": "뉴스 · 법개정",
+    "subtitle": "신차 소식부터 라이더 필수 정보까지"
+  },
+  "market": {
+    "title": "마켓 하이라이트",
+    "subtitle": "BAPL 인증 매물로 안전하게",
+    "verifiedLead": "BAPL 인증 매물"
+  },
+  "community": {
+    "title": "커뮤니티 인기글",
+    "subtitle": "라이더들의 생생한 이야기"
+  }
+}

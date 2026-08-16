@@ -1,0 +1,19 @@
+{
+  "name": "BAPL — Bike & Adventure Platform",
+  "short_name": "BAPL",
+  "description": "바이크를 사랑하는 사람들을 위한 커뮤니티 & 종합 플랫폼",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#f6f7f9",
+  "lang": "ko",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

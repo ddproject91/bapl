@@ -1,0 +1,40 @@
+"use server";
+
+import { getSupabaseAdmin } from "@/lib/supabase";
+
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+
+/** 회원가입 프로필 사진 업로드 (계정 생성 전이라 인증 없이 호출됨). */
+export async function uploadAvatarAction(
+  formData: FormData,
+): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
+  const file = formData.get("file");
+  if (!(file instanceof File)) {
+    return { ok: false, error: "파일이 없습니다." };
+  }
+  if (!file.type.startsWith("image/")) {
+    return { ok: false, error: "이미지 파일만 업로드할 수 있어요." };
+  }
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return { ok: false, error: "파일이 너무 커요 (최대 5MB)." };
+  }
+
+  const supabase = getSupabaseAdmin();
+  if (!supabase) {
+    return { ok: false, error: "Supabase가 설정되지 않았습니다." };
+  }
+
+  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  const path = `avatars/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+  const { error } = await supabase.storage.from("images").upload(path, file, {
+    contentType: file.type,
+    cacheControl: "31536000",
+  });
+  if (error) {
+    return { ok: false, error: error.message };
+  }
+
+  const { data } = supabase.storage.from("images").getPublicUrl(path);
+  return { ok: true, url: data.publicUrl };
+}
