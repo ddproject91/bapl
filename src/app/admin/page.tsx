@@ -42,7 +42,14 @@ export default async function AdminHomePage() {
         </div>
       )}
 
-      <div className="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <Link
+          href="/admin/stats"
+          className="flex items-center justify-between rounded-xl border border-border bg-bg-card px-4 py-3 text-sm transition-colors hover:border-neon/40"
+        >
+          <span className="font-medium">사이트 통계</span>
+          <span className="text-xs text-fg-subtle">→</span>
+        </Link>
         <Link
           href="/admin/members"
           className="flex items-center justify-between rounded-xl border border-border bg-bg-card px-4 py-3 text-sm transition-colors hover:border-neon/40"
