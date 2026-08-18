@@ -9,20 +9,25 @@ export default async function AdminMembersPage() {
   let configured = Boolean(supabase);
 
   if (supabase) {
-    const [{ data: usersData, error: usersError }, { data: profiles, error: profilesError }] =
-      await Promise.all([
-        supabase.auth.admin.listUsers(),
-        supabase
-          .from("profiles")
-          .select(
-            "id, nickname, region, points, is_rider_verified, role, tier, avatar_url, bike_model, created_at",
-          ),
-      ]);
+    const [
+      { data: usersData, error: usersError },
+      { data: profiles, error: profilesError },
+      { data: notes },
+    ] = await Promise.all([
+      supabase.auth.admin.listUsers(),
+      supabase
+        .from("profiles")
+        .select(
+          "id, nickname, region, points, is_rider_verified, role, tier, avatar_url, bike_model, created_at",
+        ),
+      supabase.from("profile_admin_notes").select("user_id, memo"),
+    ]);
 
     if (usersError || profilesError) {
       configured = false;
     } else {
       const profileById = new Map((profiles ?? []).map((p) => [p.id, p]));
+      const memoById = new Map((notes ?? []).map((n) => [n.user_id, n.memo]));
       members = usersData.users
         .map((u) => {
           const p = profileById.get(u.id);
@@ -38,6 +43,7 @@ export default async function AdminMembersPage() {
             avatarUrl: p.avatar_url ?? "",
             bikeModel: p.bike_model ?? "",
             createdAt: p.created_at,
+            memo: memoById.get(u.id) ?? "",
           } satisfies MemberRow;
         })
         .filter((m): m is MemberRow => m !== null)
@@ -55,7 +61,7 @@ export default async function AdminMembersPage() {
       </Link>
       <h1 className="mb-1 text-xl font-black tracking-tight">회원 관리</h1>
       <p className="mb-6 text-sm text-fg-muted">
-        가입한 회원의 권한(role)과 등급(tier), 라이더 인증 여부를 설정하세요.
+        가입한 회원의 권한(role)과 등급(tier), 라이더 인증 여부를 설정하세요. 메모는 관리자만 볼 수 있어요.
       </p>
 
       {!configured && (

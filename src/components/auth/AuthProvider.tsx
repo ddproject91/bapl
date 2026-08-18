@@ -10,7 +10,7 @@ import {
 } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-export type Role = "user" | "vendor" | "admin";
+export type Role = "user" | "vendor" | "seller" | "admin";
 export type Tier = "bronze" | "silver" | "gold" | "platinum";
 
 export interface Profile {

@@ -17,7 +17,7 @@ async function assertAdmin() {
 
 export async function updateMemberAction(
   userId: string,
-  patch: { role: Role; tier: Tier; isRiderVerified: boolean },
+  patch: { role: Role; tier: Tier; isRiderVerified: boolean; memo: string },
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   await assertAdmin();
   const supabase = getSupabaseAdmin();
@@ -35,6 +35,15 @@ export async function updateMemberAction(
   if (error) {
     return { ok: false, error: error.message };
   }
+
+  // 관리자 전용 메모 — 별도 테이블(RLS로 일반 사용자 접근 차단됨)에 upsert.
+  const { error: memoError } = await supabase
+    .from("profile_admin_notes")
+    .upsert({ user_id: userId, memo: patch.memo, updated_at: new Date().toISOString() });
+  if (memoError) {
+    return { ok: false, error: memoError.message };
+  }
+
   revalidatePath("/admin/members");
   return { ok: true };
 }

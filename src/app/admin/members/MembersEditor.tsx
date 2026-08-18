@@ -16,9 +16,10 @@ export interface MemberRow {
   avatarUrl: string;
   bikeModel: string;
   createdAt: string;
+  memo: string;
 }
 
-const ROLES: Role[] = ["user", "vendor", "admin"];
+const ROLES: Role[] = ["user", "vendor", "seller", "admin"];
 const TIERS: Tier[] = ["bronze", "silver", "gold", "platinum"];
 
 export function MembersEditor({ initialMembers }: { initialMembers: MemberRow[] }) {
@@ -40,6 +41,7 @@ export function MembersEditor({ initialMembers }: { initialMembers: MemberRow[] 
       role: member.role,
       tier: member.tier,
       isRiderVerified: member.isRiderVerified,
+      memo: member.memo,
     });
     setSavingId(null);
     if (result.ok) {
@@ -66,6 +68,7 @@ export function MembersEditor({ initialMembers }: { initialMembers: MemberRow[] 
             <th className="px-4 py-3 font-medium">등급</th>
             <th className="px-4 py-3 font-medium">라이더 인증</th>
             <th className="px-4 py-3 font-medium">포인트</th>
+            <th className="px-4 py-3 font-medium">메모 (관리자 전용)</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -121,6 +124,15 @@ export function MembersEditor({ initialMembers }: { initialMembers: MemberRow[] 
                 />
               </td>
               <td className="px-4 py-3 font-mono text-xs">{m.points}</td>
+              <td className="px-4 py-3">
+                <input
+                  type="text"
+                  value={m.memo}
+                  onChange={(e) => patch(m.id, { memo: e.target.value })}
+                  placeholder="예: 지인, 요주의 등"
+                  className="w-40 rounded-lg border border-border bg-bg px-2 py-1.5 text-xs outline-none focus:border-neon"
+                />
+              </td>
               <td className="px-4 py-3">
                 <div className="flex items-center gap-2">
                   <button
