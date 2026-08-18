@@ -50,6 +50,15 @@ interface AuthContextValue {
   logout: () => void;
   refreshProfile: () => Promise<void>;
   loginWithKakao: () => Promise<void>;
+  sendPhoneOtp: (phone: string) => Promise<boolean>;
+  verifyPhoneOtp: (phone: string, token: string) => Promise<boolean>;
+}
+
+/** "010-1234-5678" 같은 국내 입력을 Supabase가 요구하는 "8210..." 형식으로 변환. */
+function toE164Phone(input: string): string {
+  const digits = input.replace(/\D/g, "");
+  const local = digits.startsWith("0") ? digits.slice(1) : digits;
+  return `82${local}`;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -194,6 +203,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // 성공 시 카카오 인증 페이지로 리다이렉트되므로 이후 처리는 없음.
   }, [supabase]);
 
+  const sendPhoneOtp = useCallback(
+    async (phone: string) => {
+      setAuthError(null);
+      const { error } = await supabase.auth.signInWithOtp({
+        phone: toE164Phone(phone),
+      });
+      if (error) {
+        setAuthError(error.message);
+        return false;
+      }
+      return true;
+    },
+    [supabase],
+  );
+
+  const verifyPhoneOtp = useCallback(
+    async (phone: string, token: string) => {
+      setAuthError(null);
+      const { error } = await supabase.auth.verifyOtp({
+        phone: toE164Phone(phone),
+        token,
+        type: "sms",
+      });
+      if (error) {
+        setAuthError(error.message);
+        return false;
+      }
+      setLoginOpen(false);
+      return true;
+    },
+    [supabase],
+  );
+
   const refreshProfile = useCallback(async () => {
     const {
       data: { session },
@@ -219,6 +261,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         refreshProfile,
         loginWithKakao,
+        sendPhoneOtp,
+        verifyPhoneOtp,
       }}
     >
       {children}

@@ -9,8 +9,17 @@ import { uploadAvatarAction } from "@/components/auth/actions";
 
 export function LoginModal() {
   const t = useTranslations("auth");
-  const { isLoginOpen, closeLogin, login, signup, authError, loginWithKakao } = useAuth();
-  const [mode, setMode] = useState<"login" | "signup">("login");
+  const {
+    isLoginOpen,
+    closeLogin,
+    login,
+    signup,
+    authError,
+    loginWithKakao,
+    sendPhoneOtp,
+    verifyPhoneOtp,
+  } = useAuth();
+  const [mode, setMode] = useState<"login" | "signup" | "phone">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
@@ -21,6 +30,11 @@ export function LoginModal() {
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState(false);
   const [agreed, setAgreed] = useState(false);
+
+  const [phone, setPhone] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [phoneSubmitting, setPhoneSubmitting] = useState(false);
 
   const onAvatarSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -66,6 +80,26 @@ export function LoginModal() {
     setSubmitting(false);
   };
 
+  async function requestOtp() {
+    setPhoneSubmitting(true);
+    const ok = await sendPhoneOtp(phone);
+    setPhoneSubmitting(false);
+    if (ok) setOtpSent(true);
+  }
+
+  async function confirmOtp() {
+    setPhoneSubmitting(true);
+    await verifyPhoneOtp(phone, otpCode);
+    setPhoneSubmitting(false);
+  }
+
+  function backToEmail() {
+    setMode("login");
+    setPhone("");
+    setOtpCode("");
+    setOtpSent(false);
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm"
@@ -86,6 +120,8 @@ export function LoginModal() {
           <p className="text-xs text-fg-muted">{t("modal.subtitle")}</p>
         </div>
 
+        {mode !== "phone" ? (
+        <>
         {mode === "signup" && (
           <>
             <div className="mb-4 flex items-center gap-3">
@@ -254,6 +290,13 @@ export function LoginModal() {
           </button>
           <button
             type="button"
+            onClick={() => setMode("phone")}
+            className="w-full rounded-xl border border-border-strong py-2.5 text-sm font-bold transition-colors hover:border-neon/50 hover:text-neon"
+          >
+            {t("modal.phone")}
+          </button>
+          <button
+            type="button"
             disabled
             className="w-full cursor-not-allowed rounded-xl border border-border-strong bg-white/40 py-2.5 text-sm font-bold text-[#1a1a1a]/50"
           >
@@ -264,6 +307,86 @@ export function LoginModal() {
         <p className="mt-3 text-center text-[10px] leading-relaxed text-fg-subtle">
           {t("modal.socialAgreeNote")}
         </p>
+        </>
+        ) : (
+        <>
+          <p className="mb-4 text-center text-xs text-fg-muted">{t("modal.phoneHint")}</p>
+
+          <label className="mb-1 block text-xs font-medium text-fg-muted">
+            {t("modal.phoneLabel")}
+          </label>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder={t("modal.phonePlaceholder")}
+            disabled={otpSent}
+            className="mb-3 w-full rounded-xl border border-border bg-bg-elevated px-3.5 py-2.5 text-sm outline-none focus:border-neon disabled:opacity-60"
+          />
+
+          {otpSent && (
+            <>
+              <label className="mb-1 block text-xs font-medium text-fg-muted">
+                {t("modal.otpLabel")}
+              </label>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={otpCode}
+                onChange={(e) => setOtpCode(e.target.value)}
+                placeholder={t("modal.otpPlaceholder")}
+                onKeyDown={(e) => e.key === "Enter" && confirmOtp()}
+                className="mb-3 w-full rounded-xl border border-border bg-bg-elevated px-3.5 py-2.5 text-sm outline-none focus:border-neon"
+              />
+            </>
+          )}
+
+          {authError && (
+            <p className="mb-3 rounded-lg bg-danger/10 px-3 py-2 text-xs font-medium text-danger">
+              {authError}
+            </p>
+          )}
+
+          {!otpSent ? (
+            <button
+              type="button"
+              onClick={requestOtp}
+              disabled={phoneSubmitting || !phone}
+              className="w-full rounded-xl bg-neon py-2.5 text-sm font-bold text-black transition-transform hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:hover:scale-100"
+            >
+              {phoneSubmitting ? t("modal.loading") : t("modal.sendOtp")}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={confirmOtp}
+              disabled={phoneSubmitting || !otpCode}
+              className="w-full rounded-xl bg-neon py-2.5 text-sm font-bold text-black transition-transform hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:hover:scale-100"
+            >
+              {phoneSubmitting ? t("modal.loading") : t("modal.verifyOtp")}
+            </button>
+          )}
+
+          {otpSent && (
+            <button
+              type="button"
+              onClick={requestOtp}
+              disabled={phoneSubmitting}
+              className="mt-3 w-full text-center text-xs font-medium text-fg-muted hover:text-neon disabled:opacity-50"
+            >
+              {t("modal.resendOtp")}
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={backToEmail}
+            className="mt-3 w-full text-center text-xs font-medium text-fg-muted hover:text-neon"
+          >
+            {t("modal.backToEmail")}
+          </button>
+        </>
+        )}
       </div>
       </div>
     </div>
