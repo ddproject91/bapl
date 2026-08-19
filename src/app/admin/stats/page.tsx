@@ -38,8 +38,8 @@ export default async function AdminStatsPage() {
     series = METRICS.map((m, i) => ({
       key: m.key,
       label: m.label,
-      dates: (results[i].data ?? [])
-        .map((row: Record<string, unknown>) => row[m.dateColumn] as string)
+      dates: ((results[i].data ?? []) as unknown as Array<Record<string, unknown>>)
+        .map((row) => row[m.dateColumn] as string)
         .filter(Boolean),
     }));
   }
