@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { CafeType, FoodCuisine, Place } from "@/lib/types";
 import { Card, Chip, EmptyState, RatingStars } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/Badge";
 import { KakaoPlacesMap } from "@/components/riding/KakaoPlacesMap";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { createClient } from "@/lib/supabase/client";
 
 type Cat = "all" | Place["category"];
 type CuisineFilter = "all" | FoodCuisine;
@@ -29,10 +31,69 @@ const CAFE_TYPES: CafeType[] = ["general", "rider"];
 
 export function PlacesList({ places }: { places: Place[] }) {
   const t = useTranslations("riding");
+  const { user, openLogin } = useAuth();
+  const [supabase] = useState(() => createClient());
   const [cat, setCat] = useState<Cat>("all");
   const [cuisine, setCuisine] = useState<CuisineFilter>("all");
   const [cafeType, setCafeType] = useState<CafeTypeFilter>("all");
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
+  const [pendingBookmarkId, setPendingBookmarkId] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    if (!user) {
+      setBookmarkedIds(new Set());
+      return;
+    }
+    supabase
+      .from("likes")
+      .select("target_id")
+      .eq("user_id", user.id)
+      .eq("target_type", "place")
+      .then(({ data }) => {
+        if (active) setBookmarkedIds(new Set((data ?? []).map((row) => row.target_id as string)));
+      });
+    return () => {
+      active = false;
+    };
+  }, [user, supabase]);
+
+  async function toggleBookmark(id: string) {
+    if (!user) {
+      setNotice(t("places.bookmarkLoginRequired"));
+      openLogin();
+      return;
+    }
+    if (pendingBookmarkId) return;
+    setPendingBookmarkId(id);
+    const alreadyBookmarked = bookmarkedIds.has(id);
+    if (alreadyBookmarked) {
+      const { error } = await supabase
+        .from("likes")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("target_type", "place")
+        .eq("target_id", id);
+      if (!error) {
+        setBookmarkedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(id);
+          return next;
+        });
+      }
+    } else {
+      const { error } = await supabase
+        .from("likes")
+        .insert({ user_id: user.id, target_type: "place", target_id: id });
+      if (!error) {
+        setBookmarkedIds((prev) => new Set(prev).add(id));
+      }
+    }
+    setPendingBookmarkId(null);
+  }
 
   function showOnMap(id: string) {
     setSelectedId(id);
@@ -42,7 +103,8 @@ export function PlacesList({ places }: { places: Place[] }) {
   const filtered = places
     .filter((p) => cat === "all" || p.category === cat)
     .filter((p) => cat !== "food" || cuisine === "all" || p.cuisine === cuisine)
-    .filter((p) => cat !== "cafe" || cafeType === "all" || p.cafeType === cafeType);
+    .filter((p) => cat !== "cafe" || cafeType === "all" || p.cafeType === cafeType)
+    .filter((p) => !favoritesOnly || bookmarkedIds.has(p.id));
 
   const catLabel = (v: Cat) =>
     v === "all"
@@ -76,7 +138,11 @@ export function PlacesList({ places }: { places: Place[] }) {
             {catLabel(v)}
           </Chip>
         ))}
+        <Chip active={favoritesOnly} onClick={() => setFavoritesOnly((v) => !v)}>
+          ♥ {t("places.favoritesOnly")}
+        </Chip>
       </div>
+      {notice && <p className="mt-2 text-xs text-fg-subtle">{notice}</p>}
 
       {/* 맛집 세부 카테고리(한식/중식/양식/일식/디저트/기타) */}
       {cat === "food" && (
@@ -108,7 +174,10 @@ export function PlacesList({ places }: { places: Place[] }) {
       {/* 플레이스 목록 */}
       {filtered.length === 0 ? (
         <div className="mt-5">
-          <EmptyState title={t("places.empty")} icon="📍" />
+          <EmptyState
+            title={favoritesOnly ? t("places.emptyFavorites") : t("places.empty")}
+            icon="📍"
+          />
         </div>
       ) : (
       <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
@@ -156,6 +225,24 @@ export function PlacesList({ places }: { places: Place[] }) {
                     📍 {t("places.viewOnMap")}
                   </button>
                 )}
+                <button
+                  type="button"
+                  aria-label={
+                    bookmarkedIds.has(p.id) ? t("places.bookmarkRemove") : t("places.bookmarkAdd")
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleBookmark(p.id);
+                  }}
+                  disabled={pendingBookmarkId === p.id}
+                  className={
+                    "absolute bottom-2 right-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-sm backdrop-blur-sm transition-colors hover:bg-black/80 disabled:opacity-60 " +
+                    (bookmarkedIds.has(p.id) ? "text-neon" : "text-white")
+                  }
+                >
+                  {bookmarkedIds.has(p.id) ? "♥" : "♡"}
+                </button>
               </div>
 
               <div className="flex flex-1 flex-col p-4">
