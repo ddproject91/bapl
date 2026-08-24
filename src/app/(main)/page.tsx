@@ -9,7 +9,6 @@ import { BrandCard } from "@/components/cards/BrandCard";
 import { SectionHeader, Card } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/Badge";
 import {
-  BikeBlueprint,
   CheckeredStrip,
   SpeedLines,
 } from "@/components/brand/BikeMotifs";
@@ -53,8 +52,6 @@ export default async function HomePage() {
               "radial-gradient(120% 90% at 85% -10%, rgba(0,165,82,0.16) 0%, transparent 45%), radial-gradient(80% 60% at 0% 110%, rgba(0,165,82,0.07) 0%, transparent 50%)",
           }}
         />
-        {/* 바이크 블루프린트 워터마크 */}
-        <BikeBlueprint className="pointer-events-none absolute -right-8 top-6 hidden w-[440px] text-neon opacity-[0.08] md:block" />
         <CheckeredStrip
           className="pointer-events-none absolute right-0 top-0 h-3 w-36 text-fg opacity-10"
           rows={2}
