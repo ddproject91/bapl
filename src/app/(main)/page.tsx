@@ -8,10 +8,7 @@ import { ModelCard } from "@/components/cards/ModelCard";
 import { BrandCard } from "@/components/cards/BrandCard";
 import { SectionHeader, Card } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/Badge";
-import {
-  CheckeredStrip,
-  SpeedLines,
-} from "@/components/brand/BikeMotifs";
+import { SpeedLines } from "@/components/brand/BikeMotifs";
 import { MainBanner } from "@/components/layout/MainBanner";
 
 export const revalidate = 300;
@@ -51,11 +48,6 @@ export default async function HomePage() {
             background:
               "radial-gradient(120% 90% at 85% -10%, rgba(0,165,82,0.16) 0%, transparent 45%), radial-gradient(80% 60% at 0% 110%, rgba(0,165,82,0.07) 0%, transparent 50%)",
           }}
-        />
-        <CheckeredStrip
-          className="pointer-events-none absolute right-0 top-0 h-3 w-36 text-fg opacity-10"
-          rows={2}
-          cols={18}
         />
         <div className="relative py-12 md:py-20">
           <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-neon/30 bg-neon/10 px-3 py-1 text-[11px] font-medium text-neon">

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { getBikePhotos } from "@/data/mock/media";
-import { BikeBlueprint } from "@/components/brand/BikeMotifs";
 
 /**
  * 전역 고정 배경 — 흐릿한 바이크 사진 + 블루프린트 워터마크 + 네온 글로우.
@@ -48,9 +47,6 @@ export async function SiteBackground() {
           opacity: 0.7,
         }}
       />
-
-      {/* 블루프린트 바이크 워터마크 */}
-      <BikeBlueprint className="absolute -right-10 bottom-10 w-[520px] max-w-[70vw] text-fg opacity-[0.05]" />
     </div>
   );
 }

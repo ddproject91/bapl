@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { CheckeredStrip, BikeBlueprint } from "@/components/brand/BikeMotifs";
 import { cn } from "@/lib/utils";
 
 /**
@@ -45,15 +44,6 @@ export function SectionBanner({
         className="absolute inset-x-0 top-0 h-0.5"
         style={{ background: accentColor, opacity: 0.9 }}
       />
-      {/* 블루프린트 모티프 */}
-      <BikeBlueprint className="absolute -bottom-6 right-2 w-64 max-w-[45%] text-white opacity-[0.12]" />
-      {/* 체커드 스트립 */}
-      <CheckeredStrip
-        className="absolute bottom-0 left-0 h-4 w-40 text-white/25"
-        rows={2}
-        cols={20}
-      />
-
       <div className="relative flex min-h-[180px] flex-col justify-center gap-2 p-6 md:min-h-[220px] md:p-8">
         <span
           className="text-[11px] font-bold uppercase tracking-[0.2em]"
