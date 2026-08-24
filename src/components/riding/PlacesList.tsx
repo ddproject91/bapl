@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { CafeType, FoodCuisine, Place } from "@/lib/types";
@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 import { KakaoPlacesMap } from "@/components/riding/KakaoPlacesMap";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
 type Cat = "all" | Place["category"];
 type CuisineFilter = "all" | FoodCuisine;
@@ -339,6 +340,16 @@ function PlaceDetailModal({
     typeof place.lng === "number" &&
     !(place.lat === 0 && place.lng === 0);
 
+  const images = [place.imageUrl, ...(place.galleryImages ?? []), ...(place.menuImages ?? [])].filter(
+    (u): u is string => !!u,
+  );
+  const [activeImage, setActiveImage] = useState(0);
+  const touchStartX = useRef(0);
+
+  function go(delta: number) {
+    setActiveImage((i) => (i + delta + images.length) % images.length);
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 sm:items-center sm:p-4"
@@ -350,16 +361,24 @@ function PlaceDetailModal({
       >
         <div className="flex-1 overflow-y-auto">
           <div
-            className="relative aspect-[4/3] w-full"
+            className="relative aspect-[4/3] w-full select-none"
             style={{
-              background: place.imageUrl
+              background: images.length
                 ? undefined
                 : `radial-gradient(120% 120% at 20% 0%, ${CAT_COLOR[place.category]}33 0%, transparent 55%), linear-gradient(135deg, #eef0f3 0%, #e2e5ea 100%)`,
             }}
+            onTouchStart={(e) => {
+              touchStartX.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const dx = e.changedTouches[0].clientX - touchStartX.current;
+              if (Math.abs(dx) > 40) go(dx > 0 ? -1 : 1);
+            }}
           >
-            {place.imageUrl ? (
+            {images.length > 0 ? (
               <Image
-                src={place.imageUrl}
+                key={images[activeImage]}
+                src={images[activeImage]}
                 alt={place.name}
                 fill
                 sizes="(min-width: 640px) 480px, 100vw"
@@ -383,7 +402,48 @@ function PlaceDetailModal({
             >
               ✕
             </button>
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="이전 사진"
+                  onClick={() => go(-1)}
+                  className="absolute left-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-sm text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  aria-label="다음 사진"
+                  onClick={() => go(1)}
+                  className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-sm text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+                >
+                  ›
+                </button>
+                <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
+                  {activeImage + 1}/{images.length}
+                </span>
+              </>
+            )}
           </div>
+
+          {images.length > 1 && (
+            <div className="flex gap-1.5 overflow-x-auto p-2">
+              {images.map((url, i) => (
+                <button
+                  key={url + i}
+                  type="button"
+                  onClick={() => setActiveImage(i)}
+                  className={cn(
+                    "relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border-2 transition-colors",
+                    i === activeImage ? "border-neon" : "border-transparent",
+                  )}
+                >
+                  <Image src={url} alt="" fill sizes="48px" className="object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
 
           <div className="flex flex-col gap-4 p-5">
             <div>
@@ -418,38 +478,6 @@ function PlaceDetailModal({
                   </div>
                 )}
               </dl>
-            )}
-
-            {place.galleryImages && place.galleryImages.length > 0 && (
-              <div>
-                <p className="mb-2 text-xs font-bold text-fg-muted">{t("places.detailGallery")}</p>
-                <div className="flex gap-2 overflow-x-auto">
-                  {place.galleryImages.map((url, i) => (
-                    <div
-                      key={url + i}
-                      className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-border"
-                    >
-                      <Image src={url} alt="" fill sizes="80px" className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {place.menuImages && place.menuImages.length > 0 && (
-              <div>
-                <p className="mb-2 text-xs font-bold text-fg-muted">{t("places.detailMenu")}</p>
-                <div className="flex gap-2 overflow-x-auto">
-                  {place.menuImages.map((url, i) => (
-                    <div
-                      key={url + i}
-                      className="relative h-32 w-24 shrink-0 overflow-hidden rounded-lg border border-border"
-                    >
-                      <Image src={url} alt="" fill sizes="96px" className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              </div>
             )}
           </div>
         </div>
