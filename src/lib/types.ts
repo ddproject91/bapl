@@ -319,9 +319,13 @@ export interface Place {
   isSponsored: boolean; // 입점
   description: string;
   imageUrl?: string; // 대표 썸네일. 없으면 카테고리 아이콘으로 폴백
-  linkUrl?: string; // 클릭 시 이동할 랜딩 URL(네이버지도/인스타/홈페이지 등). 없으면 클릭 비활성.
+  linkUrl?: string; // 상세 팝업 하단 "바로가기" 버튼에 쓰이는 외부 링크(네이버지도/인스타/홈페이지 등).
   lat?: number; // 카카오맵 표시용 위도. 0/미설정이면 지도에 핀 없음.
   lng?: number; // 카카오맵 표시용 경도.
+  hours?: string; // 운영시간
+  address?: string; // 주소
+  galleryImages?: string[]; // 추가 이미지
+  menuImages?: string[]; // 메뉴 이미지
 }
 
 export interface TourPackage {

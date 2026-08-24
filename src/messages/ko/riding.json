@@ -149,6 +149,12 @@
     "bookmarkRemove": "찜 해제",
     "bookmarkLoginRequired": "찜하기는 로그인 후 이용할 수 있습니다.",
     "favoritesOnly": "찜한 곳만",
-    "emptyFavorites": "아직 찜한 플레이스가 없습니다."
+    "emptyFavorites": "아직 찜한 플레이스가 없습니다.",
+    "detailClose": "닫기",
+    "detailAddress": "주소",
+    "detailHours": "운영시간",
+    "detailGallery": "추가 이미지",
+    "detailMenu": "메뉴",
+    "detailLink": "바로가기"
   }
 }
