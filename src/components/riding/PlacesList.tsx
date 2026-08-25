@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { CafeType, FoodCuisine, Place } from "@/lib/types";
@@ -43,6 +44,7 @@ export function PlacesList({ places }: { places: Place[] }) {
   const [pendingBookmarkId, setPendingBookmarkId] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [detailPlace, setDetailPlace] = useState<Place | null>(null);
+  const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
 
   useEffect(() => {
     if (!detailPlace) return;
@@ -284,10 +286,14 @@ export function PlacesList({ places }: { places: Place[] }) {
               <div
                 role="button"
                 tabIndex={0}
-                onClick={() => setDetailPlace(p)}
+                onClick={(e) => {
+                  setAnchorRect(e.currentTarget.getBoundingClientRect());
+                  setDetailPlace(p);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
+                    setAnchorRect(e.currentTarget.getBoundingClientRect());
                     setDetailPlace(p);
                   }
                 }}
@@ -305,6 +311,7 @@ export function PlacesList({ places }: { places: Place[] }) {
       {detailPlace && (
         <PlaceDetailModal
           place={detailPlace}
+          anchorRect={anchorRect}
           onClose={() => setDetailPlace(null)}
           onShowOnMap={() => {
             showOnMap(detailPlace.id);
@@ -321,6 +328,7 @@ export function PlacesList({ places }: { places: Place[] }) {
 
 function PlaceDetailModal({
   place,
+  anchorRect,
   onClose,
   onShowOnMap,
   catLabel,
@@ -328,6 +336,7 @@ function PlaceDetailModal({
   cafeTypeLabel,
 }: {
   place: Place;
+  anchorRect: DOMRect | null;
   onClose: () => void;
   onShowOnMap: () => void;
   catLabel: (v: Cat) => string;
@@ -345,6 +354,36 @@ function PlaceDetailModal({
   );
   const [activeImage, setActiveImage] = useState(0);
   const touchStartX = useRef(0);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [anchoredStyle, setAnchoredStyle] = useState<CSSProperties>({});
+
+  // 데스크톱(화면 640px 이상)에서는 클릭한 카드 근처에 팝업을 띄운다.
+  // 모바일은 화면이 좁아 의미가 없으므로 기존처럼 하단 시트로 고정.
+  useLayoutEffect(() => {
+    if (!anchorRect || !window.matchMedia("(min-width: 640px)").matches) {
+      setAnchoredStyle({});
+      return;
+    }
+    const panel = panelRef.current;
+    const width = panel?.offsetWidth ?? 420;
+    const height = panel?.offsetHeight ?? 480;
+    const margin = 16;
+
+    let left = anchorRect.left;
+    if (left + width > window.innerWidth - margin) {
+      left = window.innerWidth - width - margin;
+    }
+    left = Math.max(margin, left);
+
+    let top = anchorRect.bottom + 8;
+    if (top + height > window.innerHeight - margin) {
+      top = anchorRect.top - height - 8;
+    }
+    top = Math.max(margin, Math.min(top, window.innerHeight - height - margin));
+
+    setAnchoredStyle({ position: "fixed", top, left, margin: 0 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anchorRect]);
 
   function go(delta: number) {
     setActiveImage((i) => (i + delta + images.length) % images.length);
@@ -356,7 +395,9 @@ function PlaceDetailModal({
       onClick={onClose}
     >
       <div
-        className="flex max-h-[88vh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-bg-card sm:rounded-3xl"
+        ref={panelRef}
+        style={anchoredStyle}
+        className="flex max-h-[88vh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-bg-card shadow-2xl sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex-1 overflow-y-auto">
