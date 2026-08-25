@@ -254,6 +254,11 @@ export function FieldInput({
   // 값 길이와 무관하게 필드 이름만으로 판단(긴 URL이 "text" 타입으로 분류돼도 업로드 UI가 빠지지 않도록).
   // 단, linkUrl처럼 "이동할 링크"를 뜻하는 필드는 이미지가 아니므로 업로드 UI를 붙이지 않는다.
   const isImageUrlField = /url$/i.test(field.key) && !/^link/i.test(field.key);
+  // galleryImages/menuImages처럼 "…Image(s)"로 끝나는 배열 필드는 여러 장 업로드 UI로 표시.
+  const isImageArrayField = /images?$/i.test(field.key);
+  const arrValue: string[] = Array.isArray(value)
+    ? (value as unknown[]).filter((v): v is string => typeof v === "string")
+    : [];
 
   async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -275,6 +280,37 @@ export function FieldInput({
     } finally {
       setUploading(false);
     }
+  }
+
+  async function handleMultiFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (files.length === 0) return;
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const uploaded: string[] = [];
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append("file", file);
+        const result = await uploadImageAction(formData);
+        if (result.ok) {
+          uploaded.push(result.url);
+        } else {
+          setUploadError(result.error);
+          break;
+        }
+      }
+      if (uploaded.length > 0) onChange([...arrValue, ...uploaded]);
+    } catch {
+      setUploadError("업로드에 실패했습니다. 파일 크기를 확인하고 다시 시도해주세요.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  function removeImageAt(i: number) {
+    onChange(arrValue.filter((_, idx) => idx !== i));
   }
 
   return (
@@ -338,7 +374,42 @@ export function FieldInput({
           className="h-4 w-4"
         />
       )}
-      {field.type === "json" && (
+      {field.type === "json" && isImageArrayField && (
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2">
+            {arrValue.map((url, i) => (
+              <div
+                key={url + i}
+                className="relative h-16 w-16 overflow-hidden rounded-lg border border-border"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={url} alt="" className="h-full w-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeImageAt(i)}
+                  aria-label="삭제"
+                  className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/70 text-[10px] text-white"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+            <label className="flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-border text-center text-[10px] text-fg-subtle hover:border-neon">
+              {uploading ? "업로드중" : "+ 추가"}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleMultiFileSelect}
+                disabled={uploading}
+                className="hidden"
+              />
+            </label>
+          </div>
+          {uploadError && <span className="text-[11px] text-danger">{uploadError}</span>}
+        </div>
+      )}
+      {field.type === "json" && !isImageArrayField && (
         <>
           <textarea
             value={jsonText}
